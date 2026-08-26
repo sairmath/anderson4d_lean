@@ -1,0 +1,54 @@
+# Lean and Lake build products
+/.lake/
+/lake-packages/
+*.olean
+*.ilean
+*.trace
+
+# Generated documentation and publication artifacts
+/blueprint/web/
+/blueprint/print/
+/site/
+/docbuild/
+/.docgen-action/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.paux
+*.synctex.gz
+*.toc
+
+# Local and temporary files
+Scratch*.lean
+/tmp/
+*.bak
+*.tmp
+*.orig
+*.rej
+*.prof
+*.swp
+*.swo
+*~
+
+# Editor, operating-system, and Python caches
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+/.direnv/
+/.cache/
+/.pytest_cache/
+/.mypy_cache/
+/.ruff_cache/
+/.coverage
+/coverage/
+/.venv/
+__pycache__/
+*.py[cod]
+
+# Local environment files
+/.env
+/.env.*
+!/.env.example

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Paper to Lean index
+    url: https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_TO_LEAN.md
+    about: Locate a paper result and its checked Lean declaration before reporting a mismatch.

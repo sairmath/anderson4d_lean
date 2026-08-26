@@ -1,0 +1,116 @@
+name: Build Pages preview
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/pages.yml"
+      - "requirements-docs.txt"
+      - "website/**"
+      - "blueprint/**"
+      - "Anderson4D/**"
+      - "Anderson4D.lean"
+      - "lakefile.toml"
+      - "lake-manifest.json"
+      - "lean-toolchain"
+
+# This workflow is permanently build-only. It cannot publish Pages because it
+# has neither `pages: write` nor `id-token: write`, and it never invokes
+# actions/deploy-pages. Deployment belongs in a separate reviewed workflow.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_pages_preview:
+    name: Build landing page, blueprint, and API docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Free runner disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
+      - name: Check out project
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build Lean project
+        uses: leanprover/lean-action@434f25c2f80ded67bba02502ad3a86f25db50709 # 2025-07-02
+        with:
+          build: true
+          lint: false
+          mk_all-check: true
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+
+      - name: Install blueprint dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes graphviz libgraphviz-dev pkg-config
+          python -m pip install --disable-pip-version-check --requirement requirements-docs.txt
+
+      - name: Build Lean blueprint web output
+        run: |
+          leanblueprint web
+          mkdir -p site/blueprint
+          cp -a blueprint/web/. site/blueprint/
+
+      # docgen-action currently guards its API-doc step with
+      # `github.event_name == 'push'`.  This preview intentionally has no push
+      # trigger, so run that action's pinned official build script directly.
+      # This has the same effect as `api-docs: true`, `build-page: false`, and
+      # `deploy: false`: it generates /docs without treating repository docs/
+      # as a Jekyll homepage and without uploading or deploying anything.
+      - name: Check out pinned docgen builder
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: leanprover-community/docgen-action
+          ref: deed0cdc44dd8e5de07a300773eb751d33e32fc8
+          path: .docgen-action
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build Lean API documentation (build-page false)
+        env:
+          NAME: anderson4d
+          DOCS_FACETS: "Anderson4D:docs"
+          HOMEPAGE: site
+        run: bash .docgen-action/scripts/build_docs.sh
+
+      - name: Stage landing page and verify site shape
+        run: |
+          install -m 0644 website/index.html site/index.html
+          install -m 0644 website/styles.css site/styles.css
+          test -s site/index.html
+          test -s site/blueprint/index.html
+          test -s site/docs/index.html
+          test -s site/docs/Anderson4D.html
+          if grep -R -n -E '(/Users/|/home/runner/|BEGIN (RSA |OPENSSH )?PRIVATE KEY|github[_-]token)' site; then
+            echo "Generated site contains a local path or credential-like text." >&2
+            exit 1
+          fi
+
+      - name: Upload build-only Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: site
+          retention-days: 7

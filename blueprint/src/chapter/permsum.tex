@@ -1,0 +1,116 @@
+\chapter{Layer L1b: permutation sums}\label{ch:permsum}
+
+The paper's core analytic-combinatorial machine (\S5.4): the balance
+between logarithmic losses and factorial gains, in the pure word model
+(\texttt{DESIGN.md}~\S5.5).
+
+\begin{definition}[Words and the factorial ledger]\label{D-ledger}
+  \uses{D-hepp}
+  \lean{Anderson4D.validWords, Anderson4D.wordSum,
+    Anderson4D.paperSum, Anderson4D.paperSum_eq_sum_arrangements,
+    Anderson4D.NoAdjacentEqual, Anderson4D.NoProperLeafBlock}\leanok
+  Words are maps \(w\colon \mathrm{Fin}\,m \to \mathcal{L}\) with
+  prescribed fiber sizes; \(\mathrm{wordSum}\) sums a functional over
+  them, and the \emph{definitional ledger} is
+  \(\mathrm{paperSum} := \big(\prod_{\mathfrak l} m_{\mathfrak l}!\big)
+  \cdot \mathrm{wordSum}\). Paper-facing statements use
+  \(\mathrm{paperSum}\) on the left with the paper's right-hand sides
+  verbatim; proofs manipulate \(\mathrm{wordSum}\). Includes the
+  no-adjacent-equal-letters and primitivity predicates on words, and the
+  labeled-arrangement fiber-count lemma
+  (\(\#\{\text{labeled arrangements inducing } w\}
+  = \prod_{\mathfrak l} m_{\mathfrak l}!\)).
+\end{definition}
+
+\begin{lemma}[Toy estimate; paper (1.14)--(1.15)]\label{T-toy}
+  \lean{Anderson4D.packing_lemma, Anderson4D.toy_injTuple_bound,
+    Anderson4D.toy_permSum_bound}\leanok
+  For \(\tau\)-separated points \(x_1,\dots,x_n \in \mathbb{T}^4\):
+  \(\sum_{\pi\in S_n}\prod_{j=1}^{n-1}
+  \lvert x_{\pi(j)} - x_{\pi(j+1)}\rvert^{-2}
+  \le C^n (n!)^{1/2}\tau^{-2(n-1)}\), via the iterated local inequality
+  (1.15).
+\end{lemma}
+\begin{proof}\leanok
+  Dyadic packing shells, last-index peeling over injective tuples,
+  central-binomial factorial comparison.
+\end{proof}
+
+\begin{lemma}[Bilinear cluster bound; paper Lemma~5.14]\label{L-5.14}
+  \lean{Anderson4D.card_shell_le, Anderson4D.sum_inv_sq_le,
+    Anderson4D.single_y_bound, Anderson4D.bilinear_cluster_S_bound,
+    Anderson4D.bilinear_cluster_bound}\leanok
+  For \(A, B \subseteq \mathbb{Z}^4\) with separations \(M, N\) and
+  \(P = \lvert A\rvert M^4\), \(Q = \lvert B\rvert N^4\): the bilinear
+  bound (5.58) with right-hand side
+  \(\lvert A\rvert^{1/2}M^{-2}\,\lvert B\rvert^{1/2}N^{-2}
+  \min\big(1, (Q/P)^{1/4}\big)\), by dyadic shell counting.
+\end{lemma}
+\begin{proof}\leanok
+  Single-\(y\) bound (5.63) by near/far case analysis; the three-case
+  \(y\)-summation (5.65)--(5.67); \(Q \le P\) assembly and the
+  min-combination with the weak bound.
+\end{proof}
+
+\begin{definition}[Simple and compound leaves; paper Def.~5.8]\label{D-leaf}
+  \uses{D-hepp}
+  \lean{Anderson4D.simpleLeaves, Anderson4D.compoundLeaves,
+    Anderson4D.gamma2, Anderson4D.gammaInf,
+    Anderson4D.gamma2_le_gammaInf,
+    Anderson4D.allSimple_direct_product_identity}\leanok
+  Leaf types, \(\gamma^2_{\mathfrak n}\), \(\gamma^\infty_{\mathfrak n}\),
+  and the power-counting identity (5.31).
+\end{definition}
+
+\begin{proposition}[Single-scale cluster estimate; paper Prop.~5.10]\label{P-5.10}
+  \uses{D-ledger,D-leaf,L-5.12,L-5.13,L-5.14,D-5.11}
+  \lean{Anderson4D.SingleScaleEstimate,
+    Anderson4D.singleScale_estimate}\leanok
+  The estimate (5.39) for word sums with a skipped set \(O\)
+  (\(\mathrm{paperSum}\) normalization; no primitivity assumed): scale
+  classification \(\sigma_1,\sigma_2,\sigma_3\), outer
+  \(\boldsymbol{X}\)-sum (5.76)--(5.86), inner \(\pi\)-sum
+  (5.87)--(5.98) via the local inequalities (5.90)--(5.92).
+  Formalization makes explicit the inclusive-ancestor constant in (5.69)
+  and uses the exponent
+  \(2(m_{\mathfrak l}-2)\) in both simple-leaf products of (5.83);
+  see \texttt{docs/PAPER\_NOTES.md}.
+\end{proposition}
+
+\begin{proposition}[Inductive estimate; paper Prop.~5.9]\label{P-5.9}
+  \uses{P-5.10,D-leaf,D-ledger}
+  \lean{Anderson4D.InductiveEstimate,
+    Anderson4D.inductive_estimate}\leanok
+  The generalized estimate (5.33) with compound leaves under (5.32),
+  constants \(C_0 > 1000\), \(D = e^{C_0^{10}}\). Proof by induction on
+  the tree: choose the lowest branching node satisfying (5.40); collapse
+  its subtree to a compound leaf via the \emph{word-level collapse
+  equivalence} \(\pi \leftrightarrow (\pi_1, O, \pi_2)\); comparability
+  (5.41); factor bookkeeping (5.42)--(5.48), with the
+  \(((s+1)!)^{-1}\) of (5.45)(i) supplied by the ledger \ref{D-ledger}.
+\end{proposition}
+
+\begin{proposition}[Permutation-sum estimate; paper Prop.~5.7]\label{P-5.7}
+  \uses{P-5.9,D-ledger,L-5.12}
+  \lean{Anderson4D.PermSumEstimate,
+    Anderson4D.permSum_estimate}\leanok
+  The estimate (5.15): \(\mathrm{paperSum}\) of the inverse-square chain
+  weights is bounded by
+  \(C^n \sum_{W\subseteq\mathcal{B}\setminus\{\mathfrak r\}}
+  (n - \lvert W\rvert)!\,\prod (m_{\mathfrak l}!)^{1/2}\cdots\)
+  --- the log-loss/factorial-gain balance. Derived from \ref{P-5.9} by
+  merging adjacent equal copies ((5.34)--(5.37)); the constants
+  \(C_0, D\) are discharged here.
+\end{proposition}
+
+\begin{proposition}[Lattice-level assembly; paper \S5.2 end]\label{R-4.1pf}
+  \uses{P-5.6,P-5.7,D-ledger}
+  \lean{Anderson4D.primitive_lattice_estimate,
+    Anderson4D.exists_uniform_primitiveKernelBounds_ge_two}\leanok
+  The (5.1)-form lattice estimate from \ref{P-5.6} and \ref{P-5.7}:
+  geometric \((N_{\mathfrak n})\)-summation (5.16)--(5.17), the endpoint
+  refinement \(\min(\lvert W\rvert + 1, n-2)\), and the elementary
+  inequality \((n-s)!\,\lvert\log\varepsilon\rvert^{\min(s+1,n-2)}
+  \le C^n\lvert\log\varepsilon\rvert^{n-2}\). Consumed by \ref{P-4.1}
+  through the discretization interface \ref{R-51}.
+\end{proposition}

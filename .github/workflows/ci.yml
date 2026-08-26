@@ -1,0 +1,64 @@
+name: Build and verify
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+# Cancel previous runs if a new commit is pushed to the same PR or branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Proof CI never deploys artifacts, so read access suffices. Pages generation
+# is isolated in the build-only pages.yml workflow.
+permissions:
+  contents: read
+
+jobs:
+  build_project:
+    runs-on: ubuntu-latest
+    name: Build project
+    # A cold build of the 800+ modules can take a little over two hours on a
+    # hosted runner. Keep the explicit ceiling aligned with GitHub's default
+    # instead of failing at the former 120-minute boundary.
+    timeout-minutes: 360
+    steps:
+      - name: Cleanup to free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
+      - name: Checkout project
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build project and check root imports
+        uses: leanprover/lean-action@434f25c2f80ded67bba02502ad3a86f25db50709 # 2025-07-02
+        with:
+          build: true
+          # This repository has no Lake lint driver.  Forcing `lint: true`
+          # makes lean-action run `lake lint`, which fails before documentation
+          # is compiled.  The project-specific release checks live below and
+          # in scripts/release_gate.sh.
+          lint: false
+          mk_all-check: true
+
+      - name: Run complete release and trust gate
+        run: bash scripts/release_gate.sh
+
+      # BLUEPRINT.md is the checked-in, GitHub-native reader interface.  Do not
+      # invoke docgen-action here: even with deployment disabled it installs an
+      # unpinned leanblueprint release and builds a TeX PDF in a second container.
+      # The release contract is instead checked above by exact Markdown links,
+      # root-import parity, and all 167 blueprint declarations.

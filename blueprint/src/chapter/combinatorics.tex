@@ -1,0 +1,81 @@
+\chapter{Layer L0: combinatorics}\label{ch:combinatorics}
+
+Pairings of finite index sets, interval structure, primitivity, and the
+elementary counting lemmas of the paper's \S5.4.2. Everything here is
+mathlib-level combinatorics with no analytic content.
+
+\begin{definition}[Partial pairing; paper Def.~2.2]\label{D-pair}
+  \lean{Anderson4D.PartialPairing}\leanok
+  A \emph{partial pairing} \(\kappa\) of a finite index set \(A\) is a
+  partition of a subset \(P \subseteq A\) into disjoint two-element
+  subsets (\emph{pairs}); \(S = A \setminus P\) is the set of
+  \emph{single} indices. If \(S = \varnothing\), \(\kappa\) is a
+  \emph{full} pairing.
+\end{definition}
+
+\begin{definition}[Intervals, fully paired subintervals, primitivity;
+  paper Def.~2.3]\label{D-int}
+  \uses{D-pair}
+  \lean{Anderson4D.IsFullyPairedOn, Anderson4D.IsPrimitive,
+    Anderson4D.leastFullyPairedSubinterval, Anderson4D.extract}\leanok
+  For a linearly ordered finite index set: subintervals \([a,b]\); a
+  subinterval \(B\) is \emph{fully paired} under \(\kappa\) if \(\kappa\)
+  induces a full pairing on \(B\); \(\kappa\) is \emph{primitive} if no
+  proper subinterval is fully paired. The L0 API also provides: the
+  induced pairing after removing a fully paired subinterval
+  (paper Def.~3.1(2a)), the smallest-leftmost fully paired subinterval
+  selector with its uniqueness lemma, and enumeration finsets for fixed
+  index sets (needs of \ref{P-3.4} and \S4.1).
+\end{definition}
+
+\begin{lemma}[Tree counting; paper Lemma~5.2]\label{L-5.2}
+  \lean{Anderson4D.PlaneTree.card_validTreesAtMost_le,
+    Anderson4D.PlaneTree.key_injective}\leanok
+  The number of plane rooted trees with \(r\) leaves in which every
+  internal node has at least two children is at most \(C^r\) for an
+  explicit absolute constant \(C\).
+  Such trees have at most \(2r-1\) vertices; the balanced-parentheses
+  serialization injects them into Dyck-type words of bounded length,
+  giving an explicit \(C\).
+\end{lemma}
+\begin{proof}\leanok
+  Prefix-code cancellation for the serialization key; injection into
+  bounded binary words.
+\end{proof}
+
+\begin{definition}[Lacunary families; paper Def.~5.11]\label{D-5.11}
+  \lean{Anderson4D.Lacunary}\leanok
+  A family of positive integers is \emph{lacunary} if every dyadic window
+  \([X, 2X]\) contains \(O(1)\) of its members.
+\end{definition}
+
+\begin{lemma}[Binomial and multinomial bounds; paper Lemma~5.12]\label{L-5.12}
+  \uses{D-5.11}
+  \lean{Anderson4D.choose_le_pow_mul_pow,
+    Anderson4D.multinomial_le_pow_mul_pow,
+    Anderson4D.multinomial_le_pow_of_lacunary}\leanok
+  For every \(\alpha > 1\) there is \(\beta = \beta(\alpha)\) with
+  \(\binom{m+n}{m} \le \alpha^m \beta^n\); the multinomial analogue
+  (paper (5.50)); and the lacunary version (paper (5.51)) with a uniform
+  \(C^{n_1+\dots+n_r}\) bound.
+\end{lemma}
+\begin{proof}\leanok
+  Binomial theorem term bound; exact-telescoping multinomial recursion;
+  dyadic pigeonhole and sorted rearrangement for the lacunary case.
+\end{proof}
+
+\begin{lemma}[Sequence counting; paper Lemma~5.13]\label{L-5.13}
+  \uses{L-5.12}
+  \lean{Anderson4D.sum_min_two_rpow_le, Anderson4D.sum_min_ratio_pow_le,
+    Anderson4D.sum_min_two_rpow_skip_le}\leanok
+  For \(\theta > 0\) and \(m \le n\):
+  \(\sum_{1\le z_1,\dots,z_m\le n}\prod_{j=1}^{m-1}
+  \min\big(1, 2^{-\theta(z_j - z_{j+1})}\big) \le C(\theta)^n\); the
+  dyadic version (paper (5.56)); and the variants skipping at most 100
+  factors.
+\end{lemma}
+\begin{proof}\leanok
+  Truncated drops with a strictly monotone reindexing into binomial
+  counts; rank replacement for the dyadic version; block splitting for
+  the skip variant.
+\end{proof}

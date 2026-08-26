@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Lean 4 formalization of the conditional main theorem in Deng and Shen's four-dimensional Anderson model."
+    >
+    <title>anderson4d — Lean 4 formalization</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="./" aria-label="anderson4d home">
+        <span class="mark" aria-hidden="true">A4</span>
+        <span>anderson4d</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="blueprint/">Blueprint</a>
+        <a href="docs/">Lean API</a>
+        <a href="https://github.com/sairmath/anderson4d_lean">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Lean 4 + mathlib</p>
+        <h1 id="hero-title">The four-dimensional Anderson model</h1>
+        <p class="lede">
+          A kernel-checked formalization of the conditional, finite-family
+          convergence-in-distribution form of Deng&ndash;Shen Theorem&nbsp;1.1.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="blueprint/">Explore the blueprint</a>
+          <a class="button secondary" href="docs/Anderson4D.html">Browse Lean declarations</a>
+        </div>
+      </section>
+
+      <section class="status-panel" aria-labelledby="status-title">
+        <div>
+          <p class="label" id="status-title">Formalization status</p>
+          <p class="status"><span aria-hidden="true"></span>Conditional scope complete</p>
+        </div>
+        <p>
+          The result is conditional only on the uniform Gabriel&ndash;Rosati
+          Proposition&nbsp;3.6 input. No unconditional theorem is claimed.
+        </p>
+      </section>
+
+      <section class="routes" aria-labelledby="routes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Start here</p>
+          <h2 id="routes-title">Three views of one proof</h2>
+        </div>
+        <div class="card-grid">
+          <a class="card featured" href="blueprint/">
+            <span class="card-number">01</span>
+            <h3>Mathematical blueprint</h3>
+            <p>
+              Begin with the dependency graph, then follow each paper result
+              to its checked Lean declaration.
+            </p>
+            <span class="card-link">Open blueprint <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a class="card" href="docs/">
+            <span class="card-number">02</span>
+            <h3>Generated Lean API</h3>
+            <p>
+              Search definitions and theorem statements, inspect types, and
+              navigate imported declarations.
+            </p>
+            <span class="card-link">Open API docs <span aria-hidden="true">&rarr;</span></span>
+          </a>
+
+          <a
+            class="card"
+            href="https://github.com/sairmath/anderson4d_lean/blob/main/Anderson4D/Main/Final.lean"
+          >
+            <span class="card-number">03</span>
+            <h3>Main theorem source</h3>
+            <p>
+              Read the public capstone: the deterministic moment bound and
+              the conditional convergence-in-law theorem.
+            </p>
+            <span class="card-link">Open Final.lean <span aria-hidden="true">&rarr;</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="theorem" aria-labelledby="theorem-title">
+        <div>
+          <p class="eyebrow">Public capstone</p>
+          <h2 id="theorem-title">Anderson4D.main_conditional_law</h2>
+        </div>
+        <code>Prop36Family M rho -&gt; MainLawStatement M rho</code>
+        <p>
+          The theorem states finite-dimensional convergence through joint
+          characteristic functions of Fourier modes, then exposes the usual
+          finite-vector convergence-in-distribution corollary.
+        </p>
+      </section>
+
+      <section class="provenance" aria-label="Authorship, citation, and license">
+        <p>
+          Formalization authors:
+          <strong>Yu Deng</strong>
+          <span aria-hidden="true">&middot;</span>
+          <strong>Hao Shen</strong>
+          <span aria-hidden="true">&middot;</span>
+          <strong>sairmath</strong>
+        </p>
+        <p>
+          Based on the
+          <a href="https://arxiv.org/abs/2607.10105">Deng&ndash;Shen paper</a>;
+          see the repository's
+          <a href="https://github.com/sairmath/anderson4d_lean/blob/main/CITATION.cff">citation metadata</a>.
+        </p>
+        <p>
+          Released under the
+          <a href="https://github.com/sairmath/anderson4d_lean/blob/main/LICENSE">Apache License 2.0</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built from the checked Lean source, blueprint, and generated API documentation.</p>
+      <a href="https://github.com/sairmath/anderson4d_lean">View repository</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+\chapter{Layer L3: deterministic parametrix}\label{ch:detparametrix}
+
+The deterministic content of the paper's \S3.1--\S3.2 and all of \S4:
+profile kernels, the renormalization induction, the constants
+\(\mathcal{C}_{2q}\), and the deterministic halves of Proposition~3.5.
+
+\begin{definition}[Deterministic profile kernels; paper (3.1)--(3.2)]\label{D-Kdet}
+  \uses{D-pair,D-int,I-green}
+  \lean{Anderson4D.detIntegrand, Anderson4D.assemble,
+    Anderson4D.SmoothCutoff.etaEpsT4}\leanok
+  For each \((m,\kappa)\), the deterministic factor of the chaos
+  expansion: products of \(G\)-factors along the chain and
+  \(\eta_\varepsilon\)-factors along the pairs, with the single-index
+  variables as free arguments; generalized inputs
+  \([G_0,\dots,G_m]\).
+\end{definition}
+
+\begin{definition}[Renormalization induction; paper Def.~3.1]\label{D-RI}
+  \uses{D-int,D-Kdet}
+  \lean{Anderson4D.detRIkernel, Anderson4D.detRIrecursiveFull,
+    Anderson4D.detRIrecursiveProfile}\leanok
+  \(\mathcal{RI}\) at the deterministic level: repeatedly remove the
+  smallest-leftmost fully paired subinterval, via \(J\) and
+  \(\widetilde G\) ((3.3)--(3.5)).
+\end{definition}
+
+\begin{proposition}[Closed formula; paper Prop.~3.2]\label{P-3.2}
+  \uses{D-RI}
+  \lean{Anderson4D.raw_sub_counterterm_eq_difference,
+    Anderson4D.detRIkernel_eq_prod,
+    Anderson4D.detRIrecursiveFull_eq_detRIfull,
+    Anderson4D.detRIrecursiveProfile_eq_detRIprofile}\leanok
+  The explicit formula (3.6): difference factors
+  \(G(x_{r_i} - x_{r_i+1}) - G(x_{\ell_i} - x_{r_i+1})\) at the removed
+  endpoints.
+\end{proposition}
+
+\begin{definition}[Renormalization constants; paper (3.8)--(3.11)]\label{D-C2q}
+  \uses{D-int,D-RI}
+  \lean{Anderson4D.detJ, Anderson4D.renormC2q,
+    Anderson4D.renormCEps}\leanok
+  \(\mathcal{J}_{2q,\sigma}\), \(\mathcal{C}_{2q,\sigma}\),
+  \(\mathcal{C}_{2q}\), and
+  \(\mathcal{C}_\varepsilon = \sum_{q\le A}\mathcal{C}_{2q}\); the
+  primitive-with-insertions structure of full pairings.
+\end{definition}
+
+\begin{proposition}[Closed formula for \(\mathcal{J}\); paper Prop.~3.3]\label{P-3.3}
+  \uses{D-C2q,P-3.2}
+  \lean{Anderson4D.renormJ_eq_prod}\leanok
+  The explicit formula (3.12).
+\end{proposition}
+
+\begin{proposition}[Bound on the constants; paper (3.22)]\label{P-3.5a}
+  \uses{D-C2q,P-4.1,R-322}
+  \lean{Anderson4D.R322AnalyticResidualPrefix.exists_r322_renormC2q_bound}\leanok
+  \(\lvert\mathcal{C}_{2q}\rvert \le \varepsilon^{-2}
+  \lvert\log\varepsilon\rvert^{-1}(C\lambda)^{2q}\) for \(1 \le q \le A\).
+\end{proposition}
+
+\begin{lemma}[Reduction machine for (3.22); paper \S4.1]\label{R-322}
+  \uses{P-4.1,I-green,D-int,D-C2q}
+  \lean{Anderson4D.R322AnalyticResidualPrefix.exists_r322RenormFiberReductionOutputAE,
+    Anderson4D.R322AnalyticResidualPrefix.exists_terminalContext_endpointFiberDetJSum_eq}\leanok
+  Dyck-word bookkeeping of nested fully paired subintervals; iterative
+  reduction integrating out innermost intervals; Taylor expansion with
+  \(\mathcal{E}\)-symmetry killing the linear term (4.9); the three-case
+  integral bounds (4.10)--(4.12).
+\end{lemma}
+
+\begin{proposition}[Deterministic second-moment bound; paper \S4.2]\label{P-3.5b-det}
+  \uses{P-4.1,R-324}
+  \lean{Anderson4D.deterministic_second_moment_bound}\leanok
+  The deterministic pairing-sum bound underlying (3.24), including the
+  decay factors
+  \(\langle\alpha\rangle^{-4}\langle\beta\rangle^{-4}
+  \langle\varepsilon^2(\alpha+\beta)\rangle^{-8}\).
+\end{proposition}
+
+\begin{lemma}[Reduction machine for (3.24); paper \S4.2]\label{R-324}
+  \uses{P-4.1,R-322,D-RI}
+  \lean{Anderson4D.R324WithinHalfResidualPrefix.exists_r324PaperResidualEndpointWeightedMajorantBound,
+    Anderson4D.exists_r324PaperFullEndpointZeroShiftWeightedMajorantBound,
+    Anderson4D.SmoothCutoff.exists_r324PaperHighWholeSeriesWeightedMajorantBound}\leanok
+  The same reduction machine plus oscillation in \((x,y,z,w)\) for the
+  decay factors ((4.16)--(4.20)).  The formal proof follows the paper's
+  two endpoint cases and retains the truncation
+  \(A = \lfloor|\log\varepsilon|\rfloor\) until the final numerical
+  assembly.
+
+  In Step~4(B), the paper obtains the total-frequency gain by finding a
+  first large/high slot among the at most \(A\) composition factors.  The
+  Lean proof keeps the complete signed open series through the removals,
+  translates the common surviving left half, extracts its Fourier
+  coefficient, selects a nonzero coordinate of \(\alpha+\beta\), and
+  integrates by parts eight times.  The only norm is taken after this
+  whole-family Fourier extraction.  This is an alternative Lean proof of
+  the same required
+  \(\langle\varepsilon^2(\alpha+\beta)\rangle^{-8}\) decay conclusion,
+  not the paper's literal first-large/high-slot proof.
+
+  Declaration-by-declaration links are recorded in
+  \href{https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_TO_LEAN.md#step-4b}
+  {\texttt{PAPER\_TO\_LEAN.md}, Step~4(B)}.
+\end{lemma}

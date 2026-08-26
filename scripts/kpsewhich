@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+"""Minimal kpsewhich replacement for TeX-less local blueprint builds.
+
+plasTeX resolves \\input/\\usepackage files through a `kpsewhich` program;
+without a TeX installation its fallback cannot handle subdirectory paths
+(it matches names against os.listdir). This shim resolves candidates
+relative to the current working directory (blueprint/src when invoked by
+plasTeX). Configured via `[general] kpsewhich=` in blueprint/src/plastex.cfg.
+"""
+import os
+import sys
+
+name = sys.argv[-1]
+for cand in (name, name + ".tex", name + ".sty", name + ".cls"):
+    if os.path.isfile(cand):
+        print(os.path.abspath(cand))
+        sys.exit(0)
+sys.exit(1)

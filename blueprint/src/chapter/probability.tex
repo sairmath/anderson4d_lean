@@ -1,0 +1,92 @@
+\chapter{Layer L4: probability primitives}\label{ch:probability}
+
+White noise via random Fourier series, the Isserlis/Wick theorem, and the
+minimal chaos API. No parametrix objects appear here.
+
+\begin{definition}[Fourier white noise]\label{I-noise}
+  \uses{I-torus}
+  \lean{Anderson4D.NoiseModel, Anderson4D.NoiseModel.xiEps,
+    Anderson4D.canonicalNoiseModel, Anderson4D.nonempty_noiseModel,
+    Anderson4D.NoiseModel.integral_xiEps_mul_eq_etaEpsT4,
+    Anderson4D.NoiseModel.ae_forall_nat_scale_contDiff_xiEpsLift}\leanok
+  The canonical probability space of independent standard real Gaussians,
+  two per \(\{\pm k\}\)-orbit and one for the zero mode; the assembled
+  complex coefficients \(g_k\) with
+  \(\mathbb{E}[g_k g_l] = \mathbf{1}_{k=-l}\),
+  \(\mathbb{E}[g_k \overline{g_l}] = \mathbf{1}_{k=l}\); the mollified
+  noise \(\xi_\varepsilon = (2\pi)^{-2}\sum_k
+  \widehat\rho(\varepsilon k)\, g_k e_k\) (the Lebesgue/probability-Haar
+  half-density from the normalization ledger),
+  a.s.\ \(C^\infty\), with a single probability-one event working
+  simultaneously for every countable scale family; the covariance identity
+  \(\mathbb{E}[\xi_\varepsilon(x)\xi_\varepsilon(y)] = \eta_\varepsilon(x-y)\),
+  \(\eta = \rho * \rho\).
+\end{definition}
+
+\begin{lemma}[Isserlis/Wick theorem]\label{I-isserlis}
+  \lean{Anderson4D.NoiseModel.integral_coordinateProduct_eq_wickPairingSum,
+    Anderson4D.NoiseModel.integral_g_product_eq_complexNoiseWickPairingSum}\leanok
+  For a finite jointly-Gaussian centered family,
+  \(\mathbb{E}\big[\prod_j X_j\big] = \sum_{\kappa \text{ full pairing}}
+  \prod_{\{i,j\}\in\kappa}\mathbb{E}[X_iX_j]\), proved by a
+  self-contained induction.
+\end{lemma}
+\begin{proof}\leanok
+  Induction on the family size for the canonical coordinate Gaussians,
+  then transport to the assembled complex coefficients \(g_k\) via the
+  orbit generators.
+\end{proof}
+
+\begin{definition}[Chaos projections]\label{I-chaos}
+  \uses{I-noise,I-isserlis}
+  \lean{Anderson4D.partialPairingChaosWeight_eq_pairProduct_mul_wickPolynomial}\leanok
+  The minimal API for Wiener-chaos projections of Gaussian polynomials
+  (orthogonality between orders; enough for (2.4) and the Wick reduction
+  of \ref{P-3.5b}; Prop.~3.6 being external, no product formula beyond
+  what \ref{P-3.4} needs).
+\end{definition}
+
+\begin{lemma}[Wick theorem for the mollified noise; paper (2.3)--(2.4)]\label{P-wick}
+  \uses{I-noise,I-isserlis,I-chaos,D-pair}
+  \lean{Anderson4D.NoiseModel.integral_xiEpsProduct_eq_wickPairingSum,
+    Anderson4D.wickAt_eq_chaosProjProduct}\leanok
+  Moments of \(\prod_j \xi_\varepsilon(x_j)\) as sums over full pairings of
+  \(\eta_\varepsilon\)-factors; the chaos decomposition of products with
+  partial pairings and \(\mathrm{Proj}_{\lvert S\rvert}\).
+\end{lemma}
+\begin{proof}\leanok
+  Isserlis applied to the mode coefficients, resummed against the
+  covariance identity \(\mathbb{E}[\xi_\varepsilon\xi_\varepsilon] =
+  \eta_\varepsilon\); the explicit Wick sum agrees with the chaos-projection
+  product by the pair-product/Wick-polynomial decomposition.
+\end{proof}
+
+\begin{lemma}[Gaussian moment method]\label{I-gaussmm}
+  \lean{Anderson4D.Prop36.tendsto_fixedTruncationRealMoment,
+    Anderson4D.Prop36.tendsto_fixedTruncationCharFun}\leanok
+  Convergence of all joint moments to those of a Gaussian vector implies
+  convergence in distribution (moment determinacy of Gaussians;
+  finite-dimensional). Realized in the
+  fixed-truncation form consumed by the assembly.
+\end{lemma}
+\begin{proof}\leanok
+  Real joint moments of the fixed truncation converge to the Gaussian
+  moments; dominated exponential-series comparison upgrades this to
+  characteristic functions.
+\end{proof}
+
+\begin{lemma}[Weak-convergence glue]\label{I-weakconv}
+  \lean{Anderson4D.TendstoInDistribution.tendsto_charFun_integral,
+    Anderson4D.ProbabilityMeasure.tendsto_of_filter_tendsto_charFun,
+    Anderson4D.mainLawStatement_of_mainStatement}\leanok
+  Filter-indexed convergence-in-distribution lemmas for realified mode
+  vectors (mathlib's sequence-indexed statements transported to the
+  \(\varepsilon\)-filter); restriction to good events of probability
+  tending to one.
+\end{lemma}
+\begin{proof}\leanok
+  Characteristic-function convergence along the \(\varepsilon\)-filter
+  yields convergence of the pushforward probability measures; the
+  law-level main statement follows from the characteristic-function
+  form.
+\end{proof}

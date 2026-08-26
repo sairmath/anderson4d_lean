@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: >-
+  If you use this formalization, please cite this software and the
+  Deng--Shen paper on which it is based.
+title: >-
+  anderson4d: A Lean 4 formalization of the four-dimensional Anderson model
+type: software
+authors:
+  - family-names: Deng
+    given-names: Yu
+  - family-names: Shen
+    given-names: Hao
+  - name: sairmath
+abstract: >-
+  A Lean 4 and mathlib formalization of the finite-family Fourier-mode form
+  of Deng and Shen's theorem on the four-dimensional Anderson model,
+  conditional on the explicit statement of Proposition 3.6.
+repository-code: https://github.com/sairmath/anderson4d_lean
+url: https://sairmath.github.io/anderson4d_lean/
+license: Apache-2.0
+keywords:
+  - Lean 4
+  - mathlib
+  - formalized mathematics
+  - Anderson model
+  - stochastic partial differential equations
+references:
+  - type: article
+    title: >-
+      The four-dimensional Anderson model: a case study for critical SPDEs
+    authors:
+      - family-names: Deng
+        given-names: Yu
+      - family-names: Shen
+        given-names: Hao
+    year: 2026
+    url: https://arxiv.org/abs/2607.10105

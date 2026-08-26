@@ -1,0 +1,76 @@
+\chapter{Layer L2: continuum estimates}\label{ch:continuum}
+
+Deterministic Fourier core, the torus Green's function, singular
+convolutions, and the discretization that feeds the lattice machine.
+
+\begin{definition}[Symmetry class \(\mathcal{E}\); paper Def.~2.1]\label{D-E}
+  \lean{Anderson4D.MemEClassR4, Anderson4D.MemEClassT4,
+    Anderson4D.SmoothCutoff}\leanok
+  Functions on \(\mathbb{T}^4\) (resp.\ \(\mathbb{R}^4\)) invariant under
+  coordinate permutations and per-coordinate sign flips (hyperoctahedral
+  \(B_4\)). The formalization uses this single-slot interpretation.
+\end{definition}
+
+\begin{definition}[Deterministic Fourier core]\label{I-torus}
+  \lean{Anderson4D.torusFourierBasis,
+    Anderson4D.hasSum_torusFourier_series_L2,
+    Anderson4D.tsum_sq_torusFourierCoeff,
+    Anderson4D.torusL2MultiplierCLM,
+    Anderson4D.paperKernelCoeff_eq_volume_sq_smul_normalized}\leanok
+  Characters \(e_k\), kernel coefficients (3.23)
+  \(\widehat K(\alpha,\beta) = \langle e_{-\alpha}, K e_\beta\rangle\),
+  Plancherel on the product torus, multiplier calculus, and the
+  normalization ledger dictionary.
+\end{definition}
+
+\begin{definition}[Green's function; paper (4.1)]\label{I-green}
+  \uses{I-torus,D-E}
+  \lean{Anderson4D.heatKernelT4, Anderson4D.greenFn,
+    Anderson4D.greenKernel, Anderson4D.fourPointH,
+    Anderson4D.paperFourierCoeff_greenFn,
+    Anderson4D.greenFn_memE,
+    Anderson4D.abs_greenLocalLift_singular,
+    Anderson4D.abs_greenLocalGrad_singular,
+    Anderson4D.abs_greenLocalHess_singular,
+    Anderson4D.abs_greenLocalImprovedRemainder_le}\leanok
+  \(G := \int_0^\infty e^{-t}\,\Theta(t,\cdot)\,\mathrm{d}t\) with
+  \(\Theta\) the periodized Gaussian (Bessel-potential representation;
+  a Fourier \texttt{tsum} is ill-defined since
+  \(\langle k\rangle^{-2}\notin\ell^1\cup\ell^2\) and
+  \(G \notin L^2\)). Lemmas: \(\widehat G(k) = \langle k\rangle^{-2}\);
+  \(G \in \mathcal{E}\); \(\lvert\nabla^k G(z)\rvert \lesssim
+  \lvert z\rvert^{-2-k}\) (\(k \le 2\)); the improved near-diagonal bound
+  for \(G - \frac{1}{4\pi^2\lvert z\rvert^2}\).
+\end{definition}
+
+\begin{lemma}[Singular convolution toolkit]\label{I-singconv}
+  \uses{I-green}
+  \lean{Anderson4D.integrable_invSqKer,
+    Anderson4D.binary_conv_invSqKer_le,
+    Anderson4D.binary_conv_invSqKer_log_le,
+    Anderson4D.triple_conv_invSqKer_le,
+    Anderson4D.singularChain_le_pow}\leanok
+  Chain convolution bounds for \(\lvert z\rvert^{-2}\)-kernels on
+  \(\mathbb{T}^4\); the estimates (5.3)--(5.4); \(\eta_\varepsilon\)-support
+  handling.
+\end{lemma}
+
+\begin{lemma}[Discretization; paper \S5.1]\label{R-51}
+  \uses{I-singconv,D-pair,D-int}
+  \lean{Anderson4D.pairedCellConstraints_of_covariance_ne_zero,
+    Anderson4D.sum_primitiveInsertedIntegrand_lintegral_le_r51GlobalDecayBound,
+    Anderson4D.exists_uniform_primitiveKernelBounds_ge_two}\leanok
+  Reduction of \ref{P-4.1} to the lattice counting bound (5.5):
+  choice of \(\mathcal{A}\), discretization
+  \(y_j = \lfloor\varepsilon^{-1}x_j\rfloor\), and the singular-integral
+  bounds (5.2)--(5.4).
+\end{lemma}
+
+\begin{proposition}[Primitive pairing estimate; paper Prop.~4.1]\label{P-4.1}
+  \uses{R-51,R-4.1pf}
+  \lean{Anderson4D.proposition41,
+    Anderson4D.proposition41_at_truncation}\leanok
+  The bounds (4.3) and (4.4) on \(\mathcal{J}_{2n,\mathrm{prim}}\), with
+  and without the \(\varepsilon^2 + \max\lvert x_i - x_j\rvert^2\)
+  insertion, for \(1 \le n \lesssim \lvert\log\varepsilon\rvert\).
+\end{proposition}

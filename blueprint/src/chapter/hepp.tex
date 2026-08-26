@@ -1,0 +1,90 @@
+\chapter{Layer L1a: Hepp trees}\label{ch:hepp}
+
+The multiscale bookkeeping structure of the paper's \S5.2, on the plane
+carrier with order-forgetting automorphisms
+(\texttt{DESIGN.md}~\S5.5).
+
+\begin{definition}[Hepp trees, markings, multiplicities; paper
+  Defs.~5.1, 5.3]\label{D-hepp}
+  \lean{Anderson4D.PlaneTree, Anderson4D.PlaneTree.HeppMarking,
+    Anderson4D.PlaneTree.Multiplicities, Anderson4D.PlaneTree.Aut,
+    Anderson4D.PlaneTree.card_aut_eq_autCard}\leanok
+  A \emph{Hepp tree} is a plane rooted tree in which every internal node
+  has at least two children (carrier \texttt{PlaneTree}; leaves are
+  identified by their position paths), together with, as separate data:
+  a \emph{marking} \(N\colon\)~branching nodes~\(\to 2^{\mathbb{N}}\),
+  strictly increasing toward the root, and \emph{multiplicities}
+  \(m\colon\)~leaves~\(\to \mathbb{N}_{\ge 2}\). Derived notation:
+  \(\mathcal{B}\), \(\mathcal{L}\), \(\gamma_{\mathfrak n}\), subtrees,
+  least common ancestors. Automorphisms are \emph{order-forgetting}:
+  recursive child permutations preserving subtree shape (and marks, for
+  \(\mathrm{Aut}(\mathcal{T},N)\)); concretely accessed through recursive
+  canonicalization. The finite group \(\mathrm{Aut}(\mathcal{T})\), its
+  action on leaves and markings, and the stabilizer description of
+  \(\mathrm{Aut}(\mathcal{T},N)\) are part of the checked definition layer.
+\end{definition}
+
+\begin{definition}[Admissible embeddings; paper Def.~5.4]\label{D-adm}
+  \uses{D-hepp}
+  \lean{Anderson4D.IsAdmissible, Anderson4D.Realizes,
+    Anderson4D.RealizesTuple}\leanok
+  For a marked Hepp tree: injections \((z_{\mathfrak l})\colon
+  \mathcal{L} \to \mathbb{Z}^4_M\) with
+  \(\lvert z_{\mathfrak l} - z_{{\mathfrak l}'}\rvert \ge
+  \tfrac12 N_{{\mathfrak l}\vee{\mathfrak l}'}\) and the linked-children
+  condition (b); realizability \(Z \leftrightarrow (\mathcal{T}, N)\);
+  the multiset/multiplicity variants.
+\end{definition}
+
+\begin{lemma}[Existence of realizing trees; paper Lemma~5.5]\label{L-5.5}
+  \uses{D-adm}
+  \lean{Anderson4D.rdec_exists_realizing_marked_tree,
+    Anderson4D.exists_realizing_tree,
+    Anderson4D.exists_realizing_tree_of_across_pairing}\leanok
+  Every finite \(Z \subseteq \mathbb{Z}^4_M\) is realized by some marked
+  Hepp tree with \(1 < N_{\mathfrak n} \lesssim M\) (greedy scale
+  construction); every paired vector \((y_j)\) is realized in the
+  multiplicity sense with even multiplicities.
+\end{lemma}
+
+\begin{lemma}[Sum decomposition; paper (5.6)--(5.11)]\label{R-decomp}
+  \uses{L-5.5,L-5.2,D-pair,D-int,D-adm,D-ledger}
+  \lean{Anderson4D.latticeChainSum_le_treeSum,
+    Anderson4D.sum_eq_sum_paired_tree_incidence_div,
+    Anderson4D.PositiveAssignment.card_le_two_pow,
+    Anderson4D.pairedWordSum_le_paperSum,
+    Anderson4D.primitivePairedWordSum_le_paperSumFiltered}\leanok
+  The master reduction of the counting sum (5.5): fix the tree
+  (\(C^n\) choices by \ref{L-5.2}), the multiplicities and the ordering
+  data; the symmetry-factor denominator; and the word-sum bound (5.10)
+  in the normalization of \ref{D-ledger}, with
+  \(\mathrm{pairedWordSum}\) on the left and
+  \(\big(\prod_{\mathfrak l}(m_{\mathfrak l}/2)!/m_{\mathfrak l}!\big)
+  \mathrm{paperSum}\) on the right exactly as printed.
+\end{lemma}
+
+\begin{lemma}[Parent-function tree bound; used at paper (5.24)]\label{I-cayley}
+  \lean{Anderson4D.parentCode_one_add_bound_real,
+    Anderson4D.weightedCayley_le_of_parent_injection,
+    Anderson4D.sum_fullParentWeight,
+    Anderson4D.step5_parent_volume_bound}\leanok
+  The sufficient parent-function injection estimate
+  \(\sum_{\mathcal H}\prod_i (1 + w_i)^{d(i)-1}
+  \le \big(q + \sum_i w_i\big)^{q-1}\) used in Step~5 of the proof of
+  \ref{P-5.6}.  This replaces the paper's exact weighted Cayley identity
+  by the weaker conclusion actually needed in (5.24)--(5.25), obtained
+  from an injection into parent functions.
+\end{lemma}
+
+\begin{proposition}[Volume estimate; paper Prop.~5.6]\label{P-5.6}
+  \uses{D-adm,L-5.2,I-cayley}
+  \lean{Anderson4D.volume_estimate}\leanok
+  The orbit-stabilizer lower bound (5.12) for the number of markings
+  realizing a given embedding, and the embedding-counting upper bounds
+  (5.13)--(5.14) with automorphism factors
+  \(\lvert\mathrm{Aut}(\mathcal{T})\rvert /
+  \lvert\mathrm{Aut}(\mathcal{T},N)\rvert\) and
+  \(\prod_{\mathfrak n} N_{\mathfrak n}^{4(\gamma_{\mathfrak n}-1)}\)
+  (and the \(\langle z_0 - z_1\rangle^{-4}\)-refined variant).
+  Six-step proof as in the paper's \S5.3.
+\end{proposition}

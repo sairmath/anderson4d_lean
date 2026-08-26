@@ -1,0 +1,105 @@
+\chapter{Introduction}
+
+This blueprint organizes the Lean~4 formalization of the main theorem of
+Deng--Shen, \emph{The four-dimensional Anderson model: a case study for
+critical SPDEs} (arXiv:2607.10105; all references use the v1 numbering).
+The accompanying documentation provides complementary views.  The
+\href{https://github.com/sairmath/anderson4d_lean/blob/main/docs/DESIGN.md}
+{\texttt{DESIGN.md}} describes architecture and scope;
+\href{https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_MAP.md}
+{\texttt{PAPER\_MAP.md}} gives node IDs and paper-level dependencies (the
+\texttt{uses}-labels here reuse those IDs verbatim);
+\href{https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_TO_LEAN.md}
+{\texttt{PAPER\_TO\_LEAN.md}} gives exact paper-number-to-public-declaration
+links; and
+\href{https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_INDEX.md}
+{\texttt{PAPER\_INDEX.md}} is the generated module inventory.  This chapter
+states the target and the global conventions; it contains no formalizable nodes.
+
+\section{The target}
+
+Let \(\xi\) be spatial white noise on \(\mathbb{T}^4 = [-\pi,\pi]^4\), let
+\(\rho\) be a smooth cutoff (Section~\ref{sec:conventions}), and
+\(\xi_\varepsilon = \rho_\varepsilon * \xi\). Consider
+\[
+\mathcal{L}_\varepsilon \;=\; 1 - \Delta - \lambda_\varepsilon\,\xi_\varepsilon
+  + \mathcal{C}_\varepsilon,
+\qquad \lambda_\varepsilon = \frac{\lambda}{\sqrt{\lvert\log\varepsilon\rvert}},
+\]
+with the explicit renormalization constants
+\(\mathcal{C}_\varepsilon = \sum_{q \le A}\mathcal{C}_{2q}\),
+\(A = \lfloor\lvert\log\varepsilon\rvert\rfloor\), of
+Chapter~\ref{ch:detparametrix}. The paper's Theorem~1.1 asserts that
+\(\mathcal{H}_\varepsilon = \lambda_\varepsilon^{-1}(G_\varepsilon - G)\) converges in
+law, as \(\varepsilon \to 0^+\), to an explicit centered Gaussian field.
+
+\textbf{Formal main statement} (design in \texttt{DESIGN.md}~\S2): for every
+cutoff \(\rho\) there is \(\lambda_0(\rho) > 0\) such that for
+\(0 < \lambda < \lambda_0\) and every finite family of Fourier modes
+\((\alpha_j,\beta_j)_{j\le s}\), the random vectors
+\(\big(\widehat{\mathcal{H}_\varepsilon}(\alpha_j,\beta_j)\big)_{j\le s}\)
+converge in distribution to the corresponding Gaussian limit
+(Chapter~\ref{ch:main}). This finite-mode form is exactly what the paper's
+proof establishes at (3.34); no distribution-space topology enters.
+
+\textbf{External input.} The single statement quoted by the paper from
+Gabriel--Rosati (arXiv:2602.22509) --- Proposition~3.6, our node
+\ref{P-3.6} --- is treated as an explicit hypothesis: it is stated in Lean
+in full, marked \emph{external} here, never assumed as an axiom, and the
+main theorem \texttt{main\_conditional} takes it as an argument. No
+unconditional \texttt{main} is declared; a proof of the cited
+Gabriel--Rosati result is outside the scope of this repository.
+
+\section{Conventions}\label{sec:conventions}
+
+The following conventions are fixed once and used silently everywhere;
+getting them wrong invalidates constants globally, so they form the fixed
+``normalization ledger''.
+
+\begin{enumerate}
+\item \textbf{Torus and measure.} \(\mathbb{T}^4\) is the product of four
+  copies of \(\mathbb{R}/2\pi\mathbb{Z}\); the reference measure is Lebesgue
+  measure of total mass \((2\pi)^4\). mathlib's \texttt{AddCircle} Fourier
+  API is normalized against probability Haar measure; the translation
+  dictionary (all \(2\pi\)-factors) is recorded with the Lean definitions.
+\item \textbf{Characters and coefficients.} \(e_k(x) = e^{i k\cdot x}\);
+  for kernels, \(\widehat K(\alpha,\beta)
+  = \iint e^{i(\alpha\cdot x + \beta\cdot y)}K(x,y)\,\mathrm{d}x\,
+  \mathrm{d}y = \langle e_{-\alpha},\, K e_\beta\rangle\) with the inner
+  product conjugate-linear in the first slot (paper (3.23); sign frozen by
+  a rank-one roundtrip test).
+\item \textbf{Cutoff.} \(\rho\colon\mathbb{R}^4 \to \mathbb{R}\) smooth,
+  nonnegative, supported in the ball of an \emph{explicit} radius \(R\)
+  (no unit-ball normalization), invariant under coordinate permutations
+  and sign flips (the class \(\mathcal{E}\), node \ref{D-E}), with
+  \(\int\rho = 1\). Torus objects arise by \(2\pi\mathbb{Z}^4\)-periodization;
+  mollification is equivalently the Fourier multiplier
+  \(\widehat{\rho}(\varepsilon k)\).
+\item \textbf{White noise.} Defined through Fourier coefficients: two
+  independent standard real Gaussians per \(\{\pm k\}\)-orbit and one for
+  the zero mode, assembled so that
+  \(\mathbb{E}[g_k g_l] = \mathbf{1}_{k=-l}\) and
+  \(\mathbb{E}[g_k \overline{g_l}] = \mathbf{1}_{k=l}\). Since these
+  characters are orthonormal for probability Haar while the paper uses
+  Lebesgue measure of mass \((2\pi)^4\), the physical field is
+  \(\xi_\varepsilon=(2\pi)^{-2}\sum_k
+  \widehat\rho(\varepsilon k)g_ke_k\). This half-density is part of the
+  normalization ledger.
+\item \textbf{Junk values.} Partial operations are totalized by junk
+  values (\(G_\varepsilon := 0\) off the invertibility event, junk limit law
+  for \(\lambda^2 \ge 2\pi^2\), etc.); every estimate carries the
+  hypotheses that exclude the junk branch.
+\item \textbf{Constants.} No asymptotic notation in Lean statements.
+  Constants referenced by several nodes are named definitions
+  (\(C_0 > 1000\), \(D = e^{C_0^{10}}\), \dots); one-off line constants
+  are existentially quantified. All constants may depend on \(\rho\)
+  (including its support radius \(R\)).
+\item \textbf{Word model.} All permutation sums of the paper's \S5.4 are
+  stated over \emph{words} (maps with prescribed fiber sizes). The
+  definitional ledger
+  \(\mathrm{paperSum} = \big(\prod_{\mathfrak{l}} m_{\mathfrak{l}}!\big)
+  \cdot \mathrm{wordSum}\) (node \ref{D-ledger}) aligns statements with
+  the paper's labeled normalization: paper-facing statements put
+  \(\mathrm{paperSum}\) on the left with the paper's right-hand sides
+  verbatim.
+\end{enumerate}

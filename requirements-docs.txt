@@ -1,0 +1,7 @@
+# Keep the blueprint renderer reproducible.  System Graphviz libraries are
+# installed separately by the Pages preview workflow.
+leanblueprint==0.0.20
+plasTeX==3.1
+plastexdepgraph==0.0.5
+plastexshowmore==0.0.2
+pygraphviz==2.0.1

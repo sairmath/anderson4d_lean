@@ -1,0 +1,30 @@
+name: Mathematical fidelity question
+description: Report a possible mismatch between the paper, blueprint, and Lean statement.
+title: "[fidelity] "
+body:
+  - type: input
+    id: paper
+    attributes:
+      label: Paper location
+      description: Definition, equation, lemma, proposition, section, and page if known.
+    validations:
+      required: true
+  - type: input
+    id: lean
+    attributes:
+      label: Lean declaration
+      description: Fully qualified declaration name and source link if known.
+    validations:
+      required: true
+  - type: textarea
+    id: mismatch
+    attributes:
+      label: Question or possible mismatch
+      description: Compare the quantifiers, hypotheses, constants, and conclusion precisely.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting calculation or reference
+      description: Provide enough detail for the claim to be checked independently.

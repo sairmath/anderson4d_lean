@@ -1,0 +1,107 @@
+\chapter{Layer L5: random parametrix}\label{ch:parametrix}
+
+The chaos-integrated kernels, the parametrix identity, and the
+\(L^2\)-theory on the good event (paper \S3.1--\S3.3 random content and
+\S3.4 Step~1).
+
+\begin{definition}[Random chaos-expansion kernels; paper (3.1)--(3.2)]\label{D-Im}
+  \uses{D-Kdet,I-chaos}
+  \lean{Anderson4D.wickAt, Anderson4D.randIntegrand,
+    Anderson4D.randRI}\leanok
+  \(\mathcal{I}_m = \sum_\kappa \mathcal{I}_{m,\kappa}\): the
+  deterministic profile kernels integrated against chaos projections of
+  \(\prod_{i\in S}\xi_\varepsilon(x_i)\).
+\end{definition}
+
+\begin{definition}[Parametrix and operator realization; paper
+  (3.13)--(3.15)]\label{D-para}
+  \uses{D-Im,D-RI,D-C2q,I-noise}
+  \lean{Anderson4D.parametrixP, Anderson4D.pmCoeff, Anderson4D.multFun,
+    Anderson4D.neumannCoeff, Anderson4D.modeHcoeff}\leanok
+  Random \(\mathcal{RI}_{m,\kappa}\), \(\mathcal{P}_m\),
+  \(\mathcal{P}_\varepsilon = \sum_{m\le A}\mathcal{P}_m\). Operator
+  realization: \(K_\varepsilon := G \circ M_\varepsilon\) with
+  \(M_\varepsilon\) multiplication by
+  \(\lambda_\varepsilon\xi_\varepsilon - \mathcal{C}_\varepsilon\);
+  invertibility predicate \(:=\) invertibility of \(1 - K_\varepsilon\) in
+  \(\mathcal{B}(L^2)\); primary mode objects
+  \(\mathrm{modeCoeffH}(\alpha,\beta) = \big\langle e_{-\alpha},
+  \big((1-K_\varepsilon)^{-1}G - G\big)e_\beta\big\rangle\) on the
+  invertibility event and \(0\) off it; the conditioned HS-difference
+  lemma \((1-K_\varepsilon)^{-1}G - G =
+  (1-K_\varepsilon)^{-1}\,G M_\varepsilon G\) with the
+  \((1+\log)\)-weighted Hilbert--Schmidt bound.
+\end{definition}
+
+\begin{proposition}[Parametrix identity; paper Prop.~3.4]\label{P-3.4}
+  \uses{D-para,P-wick,P-3.2,P-3.3}
+  \lean{Anderson4D.PartialPairing.xi_comp_parametrix,
+    Anderson4D.PartialPairing.ae_ae_parametrixP_eq_gradedParametrix,
+    Anderson4D.PartialPairing.ae_parametrixGradedCoefficientAgreement}\leanok
+  \(\lambda_\varepsilon\xi_\varepsilon\circ\mathcal{P}_{m-1}
+  = (1-\Delta)\mathcal{P}_m + \sum_{1\le q\le m/2}
+  \mathcal{C}_{2q}\mathcal{P}_{m-2q}\) and its mirror (3.17), as
+  Fourier-multiplier identities of random kernels; proof by the
+  three-case analysis of pairings of the new index.
+\end{proposition}
+\begin{proof}\leanok
+  Three-case analysis of the pairings of the new index at graded-kernel
+  level, under an explicit Fubini-integrability ledger; the ledger is
+  discharged almost everywhere from almost-sure continuity of the
+  mollified noise, giving the almost-everywhere kernel and coefficient
+  agreement forms.
+\end{proof}
+
+\begin{lemma}[Error identities; paper (3.20)--(3.21)]\label{P-err}
+  \uses{P-3.4}
+  \lean{Anderson4D.PartialPairing.leftPreconditionedParametrixAction_eq_green_add_remainder_of_ledger,
+    Anderson4D.PartialPairing.rightPreconditionedParametrixAction_eq_green_add_remainder_of_ledger}\leanok
+  \(\mathcal{L}_\varepsilon\mathcal{P}_\varepsilon = 1 + \mathcal{R}_\varepsilon\)
+  in multiplier form, with the explicit error kernels
+  \(\mathcal{R}_\varepsilon, \mathcal{R}'_\varepsilon\).
+\end{lemma}
+\begin{proof}\leanok
+  Telescoping the graded parametrix identity across orders \(m \le A\)
+  on both sides, under the same Fubini ledger as \ref{P-3.4} (discharged
+  almost everywhere by the a.e.\ closure chain).
+\end{proof}
+
+\begin{proposition}[Second-moment bound; paper (3.24)]\label{P-3.5b}
+  \uses{P-3.5b-det,P-wick,D-para}
+  \lean{Anderson4D.NoiseModel.wickAtSecondMomentLaw,
+    Anderson4D.mainSecondMomentInput_of_deterministicMomentBound}\leanok
+  \(\mathbb{E}\lvert\widehat{\mathcal{P}_m}(\alpha,\beta)\rvert^2
+  \le \lambda_\varepsilon^2\, C(C\lambda)^{2m-2}\min\big(1,
+  \varepsilon^{-8}\langle\alpha\rangle^{-4}\langle\beta\rangle^{-4}
+  \langle\varepsilon^2(\alpha+\beta)\rangle^{-8}\big)\): the Wick
+  reduction to \ref{P-3.5b-det}.
+\end{proposition}
+
+\begin{proposition}[\(L^2\) bounds and the inverse; paper \S3.4
+  Step~1]\label{P-L2}
+  \uses{P-3.5a,P-3.5b,P-err,I-noise,I-l2op,D-para}
+  \lean{Anderson4D.MainGoodEvent.nonempty_fixedModeGoodEventData_of_deterministic_bounds}\leanok
+  \(\mathbb{E}\|\mathcal{P}_m\|^2_{L^2\to L^2}\) via Plancherel double
+  sums ((3.30)--(3.31)); \(\mathbb{E}\|\mathcal{P}_\varepsilon\| \le
+  \varepsilon^{-12}\), \(\mathbb{E}(\|\mathcal{R}_\varepsilon\| +
+  \|\mathcal{R}'_\varepsilon\|) \le \varepsilon^{30}\); the Chebyshev good
+  event \(Z_\varepsilon^c\); Neumann inversion and
+  \(\|\mathcal{L}_\varepsilon^{-1} - \mathcal{P}_\varepsilon\|_{L^2\to L^2}
+  \le \varepsilon^{12}\) (3.33).
+\end{proposition}
+
+\begin{lemma}[Kernel--operator bridge]\label{I-l2op}
+  \uses{I-torus}
+  \lean{Anderson4D.paperKernelCoeff_eq_volume_mul_inner_of_action,
+    Anderson4D.neumannCoeff_eq_paperKernelCoeff,
+    Anderson4D.fredholmModeHcoeff_eq_inverseGreen,
+    Anderson4D.fredholmModeHcoeff_eq_modeHcoeff_of_norm_lt_one}\leanok
+  Kernels vs.\ \(\mathcal{B}(L^2(\mathbb{T}^4))\): operator norms from
+  Plancherel double sums (no named Hilbert--Schmidt API assumed);
+  Neumann-series inversion.
+\end{lemma}
+\begin{proof}\leanok
+  Kernel coefficients against mode vectors identified with operator
+  inner products; the coefficient-level Neumann series agrees with the
+  operator inverse below norm one.
+\end{proof}

@@ -1,0 +1,34 @@
+name: Build or tooling problem
+description: Report a reproducible failure in the pinned Lean environment.
+title: "[build] "
+body:
+  - type: markdown
+    attributes:
+      value: Please run the commands from the repository root and remove private information from logs.
+  - type: input
+    id: revision
+    attributes:
+      label: Revision
+      description: Commit SHA or release tag.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, architecture, and `lean --version` output.
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands and output
+      description: Include the exact command and the smallest relevant error output.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction notes
+      description: State whether `lake exe cache get`, `lake build`, or `bash scripts/release_gate.sh` was run.

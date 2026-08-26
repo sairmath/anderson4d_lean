@@ -1,0 +1,96 @@
+\chapter{Layer L6: assembly}\label{ch:main}
+
+The external input, the limit law, the finite-mode reduction, and the
+conditional main theorem (paper \S3.4 Steps~2--3 and Theorem~1.1).
+
+\begin{proposition}[\textbf{External input}: moment factorization; paper
+  Prop.~3.6]\label{P-3.6}
+  \uses{D-para,I-torus,D-limit}
+  \lean{Anderson4D.Prop36, Anderson4D.Prop36Family}\leanok
+  \emph{Quoted by the paper from Gabriel--Rosati (arXiv:2602.22509,
+  Props.~3.9 and 3.12); stated in Lean in full and taken as a hypothesis
+  of the main theorem.}
+  Literal quantifier form (\texttt{PAPER\_MAP.md} remark~6): for every
+  \(B, r\) there exist \(\mathfrak{X}_B\) with
+  \(\lvert\mathfrak{X}_B(m_1,m_2)\rvert \le C(C\lambda)^{m_1+m_2-2}\)
+  for positive orders and (3.28), summed over \(m_1,m_2\ge1\), with
+  value \((\lambda/(\sqrt{2}\,\pi))^{m-2}\) for even \(m\le B\) and \(0\)
+  for odd \(m\le B\), such that for every positive-order mode family,
+  eventually in \(\varepsilon\), (3.26)--(3.27) hold uniformly over orders
+  \(m_j \le B\), with the literal (3.26) error
+  \(O(\lambda_\varepsilon^r/\lvert\log\varepsilon\rvert)\).  The public
+  \texttt{Prop36Family} interface is precisely the hypothesis
+  consumed by \texttt{main\_conditional}.  The interface also exposes the measurability of each coefficient and
+  integrability of every displayed finite product, implicit in the
+  paper's use of these expressions as moments.
+\end{proposition}
+
+\begin{definition}[Limit law; paper (1.3), (3.25), (3.28)]\label{D-limit}
+  \uses{I-green,I-torus}
+  \lean{Anderson4D.fourPointHCoeff, Anderson4D.limitVar,
+    Anderson4D.gaussianLimitLaw_of_sq_lt,
+    Anderson4D.charFun_gaussianLimitLaw,
+    Anderson4D.limitCovMatrix_posSemidef,
+    Anderson4D.charFun_gaussianLimitLaw_realifiedLinearCoeff_of_subcritical}\leanok
+  The four-point kernel
+  \(H(x_1,y_1,x_2,y_2) = \int G(x_1-z)G(y_1-z)G(x_2-z)G(y_2-z)\,
+  \mathrm{d}z\); the centered Gaussian law on the realification
+  \(\mathbb{R}^{2s}\) of the chosen modes, with the full real covariance
+  determined by \(\frac{2\pi^2}{2\pi^2-\lambda^2}\widehat H\) on mode
+  pairs (conjugate modes supplying the pseudo-covariance); positive
+  semidefiniteness and existence for \(\lambda^2 < 2\pi^2\); junk law
+  otherwise.
+\end{definition}
+
+\begin{lemma}[Finite-mode reduction; paper \S3.4 Step~2]\label{P-red}
+  \uses{P-L2,I-weakconv}
+  \lean{Anderson4D.Prop36.tendsto_fullResolventChar_of_second_moment_and_goodEvent,
+    Anderson4D.MainGoodEvent.nonempty_fixedModeGoodEventData_of_deterministic_bounds}\leanok
+  On the good event, replacement of \(\mathcal{H}_\varepsilon\) by the
+  truncated \(\mathcal{Q}_\varepsilon\) for any fixed finite mode family
+  (mode functionals are controlled by operator norms;
+  \(\mathbb{P}(Z_\varepsilon) \to 0\)). No tightness is needed for the
+  finite-mode target.
+\end{lemma}
+\begin{proof}\leanok
+  Characteristic functions of the full resolvent modes converge once the
+  second-moment input and the measurable good-event data are supplied;
+  the good-event data are constructed from the deterministic bounds.
+\end{proof}
+
+\begin{lemma}[Moment method; paper \S3.4 Step~3]\label{P-mom}
+  \uses{P-3.5b,P-3.6,I-gaussmm,D-limit}
+  \lean{Anderson4D.Prop36.tendsto_fixedTruncationCharFun,
+    Anderson4D.Prop36.tendsto_fullParametrixChar_of_geometric_second_moment_bound,
+    Anderson4D.Prop36.tendsto_charFun_of_fixedTruncation_approximation,
+    Anderson4D.Prop36.tendsto_fixedGaussianCharFun_atTop,
+    Anderson4D.tsum_prop36EvenTerms_eq_limitPrefactor}\leanok
+  Truncation \(\mathcal{Q}_{B,\varepsilon}\); joint moments converge to
+  Gaussian moments ((3.36)--(3.37)) with the mode family closed under
+  negation; invoking Proposition~3.6 at order bound \(2B\) makes (3.28)
+  determine the aggregate pair covariance of
+  \(\mathcal Q_{B,\varepsilon}\) without a cross-truncation choice; the
+  \(B \to \infty\) geometric summation \(\mathfrak{X}_B \to
+  \frac{2\pi^2}{2\pi^2-\lambda^2}\) ((3.38)--(3.39)).
+\end{lemma}
+\begin{proof}\leanok
+  Fixed-truncation joint moments converge to Gaussian moments by
+  Proposition~3.6; characteristic functions follow by the moment method;
+  the truncation is removed by the geometric second-moment bound and the
+  \(B \to \infty\) tail, with the even-term series summed to the limit
+  prefactor.
+\end{proof}
+
+\begin{theorem}[Conditional main theorem; paper Thm.~1.1]\label{T-1.1}
+  \uses{P-red,P-mom,P-3.6}
+  \lean{Anderson4D.MainStatement,
+    Anderson4D.MainConditional,
+    Anderson4D.main_conditional,
+    Anderson4D.main_conditional_law}\leanok
+  Assuming \ref{P-3.6}: for every cutoff \(\rho\) there is
+  \(\lambda_0(\rho) > 0\) such that for all \(\lambda \in (0,\lambda_0)\)
+  and every finite family of modes, the vectors
+  \(\big(\widehat{\mathcal{H}_\varepsilon}(\alpha_j,\beta_j)\big)_j\)
+  converge in distribution, as \(\varepsilon \to 0^+\), to the Gaussian
+  limit law of \ref{D-limit}.
+\end{theorem}
