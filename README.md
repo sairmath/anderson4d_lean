@@ -1,6 +1,8 @@
 # anderson4d
 
-**[Blueprint & dependency graph](BLUEPRINT.md)** ·
+**[Live project site](https://sairmath.github.io/anderson4d_lean/)** ·
+**[Web blueprint & full DAG](https://sairmath.github.io/anderson4d_lean/blueprint/)** ·
+**[GitHub-native blueprint](BLUEPRINT.md)** ·
 **[Paper → Lean index](docs/PAPER_TO_LEAN.md)** ·
 **[Citation](CITATION.cff)** ·
 **[Apache-2.0 license](LICENSE)**
@@ -84,6 +86,9 @@ release and trust policies.
 
 ## Read the blueprint and main theorem
 
+The [live web blueprint](https://sairmath.github.io/anderson4d_lean/blueprint/)
+provides the fully typeset mathematical text, declaration links, and
+[interactive dependency graph](https://sairmath.github.io/anderson4d_lean/blueprint/dep_graph_document.html).
 The [GitHub-native blueprint](BLUEPRINT.md) contains the proof spine, the
 [complete 53-node / 103-edge DAG](BLUEPRINT.md#complete-dag), and one-click
 links from every node to a checked Lean declaration. For an exact lookup by

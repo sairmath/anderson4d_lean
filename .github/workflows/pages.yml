@@ -1,11 +1,26 @@
-name: Build Pages preview
+name: Build and deploy Pages
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/pages.yml"
+      - "requirements-docs.txt"
+      - "scripts/check_pages_site.py"
+      - "website/**"
+      - "blueprint/**"
+      - "Anderson4D/**"
+      - "Anderson4D.lean"
+      - "lakefile.toml"
+      - "lake-manifest.json"
+      - "lean-toolchain"
   pull_request:
     paths:
       - ".github/workflows/pages.yml"
       - "requirements-docs.txt"
+      - "scripts/check_pages_site.py"
       - "website/**"
       - "blueprint/**"
       - "Anderson4D/**"
@@ -14,21 +29,19 @@ on:
       - "lake-manifest.json"
       - "lean-toolchain"
 
-# This workflow is permanently build-only. It cannot publish Pages because it
-# has neither `pages: write` nor `id-token: write`, and it never invokes
-# actions/deploy-pages. Deployment belongs in a separate reviewed workflow.
+# Pull-request builds stay read-only. Deployment permissions are granted only
+# to the trusted deployment job after the complete site build has passed.
 permissions:
   contents: read
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  build_pages_preview:
+  build_pages:
     name: Build landing page, blueprint, and API docs
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 360
+    concurrency:
+      group: pages-build-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Free runner disk space
@@ -74,12 +87,8 @@ jobs:
           mkdir -p site/blueprint
           cp -a blueprint/web/. site/blueprint/
 
-      # docgen-action currently guards its API-doc step with
-      # `github.event_name == 'push'`.  This preview intentionally has no push
-      # trigger, so run that action's pinned official build script directly.
-      # This has the same effect as `api-docs: true`, `build-page: false`, and
-      # `deploy: false`: it generates /docs without treating repository docs/
-      # as a Jekyll homepage and without uploading or deploying anything.
+      # Invoke the pinned official builder directly so pull requests and
+      # trusted deployments use the same API-documentation generation path.
       - name: Check out pinned docgen builder
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -96,21 +105,42 @@ jobs:
           HOMEPAGE: site
         run: bash .docgen-action/scripts/build_docs.sh
 
-      - name: Stage landing page and verify site shape
+      - name: Stage landing page and verify site
         run: |
           install -m 0644 website/index.html site/index.html
           install -m 0644 website/styles.css site/styles.css
-          test -s site/index.html
-          test -s site/blueprint/index.html
-          test -s site/docs/index.html
-          test -s site/docs/Anderson4D.html
+          install -m 0644 website/og.png site/og.png
+          python scripts/check_pages_site.py site
           if grep -R -n -E '(/Users/|/home/runner/|BEGIN (RSA |OPENSSH )?PRIVATE KEY|github[_-]token)' site; then
             echo "Generated site contains a local path or credential-like text." >&2
             exit 1
           fi
 
-      - name: Upload build-only Pages artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site
           retention-days: 7
+
+  deploy_pages:
+    name: Deploy GitHub Pages
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    needs: build_pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: github-pages-production
+      cancel-in-progress: false
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

@@ -13,7 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 # Proof CI never deploys artifacts, so read access suffices. Pages generation
-# is isolated in the build-only pages.yml workflow.
+# and publication are isolated in pages.yml; its untrusted build job remains
+# read-only and only the post-build deployment job receives Pages permissions.
 permissions:
   contents: read
 

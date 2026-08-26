@@ -1,26 +1,261 @@
-/* This file contains CSS tweaks for this blueprint.
- * As an example, we included CSS rules that put
- * a vertical line on the left of theorem statements
- * and proofs.
- * */
-
-div.theorem_thmcontent {
-	border-left: .15rem solid black;
+:root {
+  --a4-ink: #17231e;
+  --a4-muted: #5b6962;
+  --a4-paper: #f5f5ee;
+  --a4-surface: #fffef9;
+  --a4-line: #d7ddd5;
+  --a4-green: #176b50;
+  --a4-green-dark: #0c4b39;
+  --a4-green-soft: #dceee5;
+  --a4-gold: #b9892f;
 }
 
+body {
+  color: var(--a4-ink);
+  background: var(--a4-paper);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body > header {
+  min-height: 3.7rem;
+  color: white;
+  background: var(--a4-green-dark);
+  text-shadow: none;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+h1#doc_title {
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: -0.015em;
+}
+
+#doc_title a,
+#doc_title a:visited {
+  color: white;
+  text-shadow: none;
+}
+
+nav.toc,
+.toc ul li {
+  background: #123f31;
+}
+
+.toc ul li.current {
+  background: var(--a4-green);
+}
+
+.toc ul a {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.93rem;
+  text-shadow: none;
+}
+
+.toc ul a:hover,
+.toc ul a:focus-visible {
+  background: #1d5d48;
+}
+
+.content {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(220, 238, 229, 0.6), transparent 28rem),
+    var(--a4-paper);
+}
+
+div.content-wrapper {
+  width: 100%;
+  max-width: 78ch;
+}
+
+.main-text {
+  margin: 0.5rem 0 3rem;
+  padding: clamp(1.1rem, 3vw, 2.4rem);
+  border: 1px solid var(--a4-line);
+  border-radius: 0.9rem;
+  background: rgba(255, 254, 249, 0.9);
+  box-shadow: 0 18px 48px rgba(21, 45, 36, 0.07);
+}
+
+.main-text > h1:first-child,
+.titlepage h1,
+h1,
+h2 {
+  color: var(--a4-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.main-text > h1:first-child {
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 3px solid var(--a4-green);
+}
+
+a {
+  color: var(--a4-green);
+  text-underline-offset: 0.16em;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--a4-green-dark);
+}
+
+div[class$="_thmwrapper"] {
+  margin: 1.6rem 0;
+  padding: 1.05rem 1.15rem;
+  border: 1px solid var(--a4-line);
+  border-radius: 0.7rem;
+  background: var(--a4-surface);
+  box-shadow: 0 5px 20px rgba(21, 45, 36, 0.04);
+}
+
+div[class$="_thmwrapper"]:target {
+  border-color: var(--a4-gold);
+  box-shadow: 0 0 0 4px rgba(185, 137, 47, 0.16);
+}
+
+div[class$="_thmheading"] {
+  color: var(--a4-green-dark);
+  flex-wrap: wrap;
+  gap: 0.16rem;
+}
+
+div.theorem_thmcontent,
 div.proposition_thmcontent {
-	border-left: .15rem solid black;
+  border-left: 0.2rem solid var(--a4-green);
 }
 
-div.lemma_thmcontent {
-	border-left: .1rem solid black;
+div.lemma_thmcontent,
+div.corollary_thmcontent,
+div.definition_thmcontent,
+div.thm_thmcontent {
+  border-left: 0.13rem solid #8aaa9a;
 }
 
-div.corollary_thmcontent {
-	border-left: .1rem solid black;
+div[class$="_thmcontent"] {
+  margin-left: 0.2rem;
+  padding: 0.55rem 0 0.2rem 1rem;
+}
+
+div.proof_wrapper {
+  margin: 0.7rem 0 1.2rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.55rem;
+  background: #f1f3ee;
 }
 
 div.proof_content {
-	border-left: .08rem solid grey;
+  margin-left: 0;
+  border-left: 0.1rem solid #9ba69f;
 }
 
+a.lean_decl,
+a.lean_link,
+a.github_link,
+a.latex_link {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  margin: 0.16rem 0;
+  padding: 0.22rem 0.48rem;
+  border: 1px solid #b9d0c4;
+  border-radius: 0.38rem;
+  color: var(--a4-green-dark);
+  background: var(--a4-green-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+a.lean_decl:hover,
+a.lean_decl:focus-visible,
+a.lean_link:hover,
+a.lean_link:focus-visible,
+a.github_link:hover,
+a.github_link:focus-visible,
+a.latex_link:hover,
+a.latex_link:focus-visible {
+  border-color: var(--a4-green);
+  background: #d1e8dc;
+}
+
+nav.prev_up_next {
+  background: var(--a4-green-dark);
+}
+
+nav.prev_up_next a {
+  color: white;
+  text-shadow: none;
+}
+
+div.modal-content {
+  border-color: var(--a4-green);
+  border-radius: 0.7rem;
+}
+
+div.modal-content header {
+  color: white;
+  background: var(--a4-green-dark);
+  text-shadow: none;
+}
+
+table {
+  overflow: hidden;
+  border: 1px solid var(--a4-line);
+  border-radius: 0.5rem;
+  background: var(--a4-surface);
+}
+
+pre.verbatim {
+  overflow-x: auto;
+  border: 1px solid var(--a4-line);
+  border-radius: 0.5rem;
+  background: #eef1ec;
+}
+
+::selection {
+  color: white;
+  background: var(--a4-green);
+}
+
+@media (max-width: 1023px) {
+  .main-text {
+    border-radius: 0.65rem;
+  }
+
+  nav.toc.active {
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 620px) {
+  body > header {
+    min-height: 3.3rem;
+  }
+
+  h1#doc_title {
+    padding-right: 2.3rem;
+    font-size: 0.92rem;
+    line-height: 1.15;
+  }
+
+  div.content {
+    padding: 0.45rem;
+  }
+
+  .main-text {
+    padding: 1rem 0.85rem;
+  }
+
+  div[class$="_thmwrapper"] {
+    padding: 0.85rem;
+  }
+
+  div[class$="_thmcontent"] {
+    padding-left: 0.7rem;
+  }
+}

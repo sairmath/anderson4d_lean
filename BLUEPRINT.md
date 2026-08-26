@@ -1,5 +1,10 @@
 # Anderson4D blueprint: paper → mathematics → Lean
 
+**[Live project site](https://sairmath.github.io/anderson4d_lean/)** ·
+**[Typeset web blueprint](https://sairmath.github.io/anderson4d_lean/blueprint/)** ·
+**[Interactive 53-node DAG](https://sairmath.github.io/anderson4d_lean/blueprint/dep_graph_document.html)** ·
+**[Generated Lean API](https://sairmath.github.io/anderson4d_lean/docs/)**
+
 This is the GitHub-native entry point for the formalization blueprint.  It is
 designed to render directly in the repository: no local TeX installation and
 no GitHub Pages deployment are required.
