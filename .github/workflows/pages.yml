@@ -111,7 +111,7 @@ jobs:
           install -m 0644 website/styles.css site/styles.css
           install -m 0644 website/og.png site/og.png
           python scripts/check_pages_site.py site
-          if grep -R -n -E '(/Users/|/home/runner/|BEGIN (RSA |OPENSSH )?PRIVATE KEY|github[_-]token)' site; then
+          if grep -R -I -n -E '(/Users/|/home/runner/|BEGIN (RSA |OPENSSH )?PRIVATE KEY|github[_-]token)' site; then
             echo "Generated site contains a local path or credential-like text." >&2
             exit 1
           fi
