@@ -87,9 +87,20 @@ jobs:
           mkdir -p site/blueprint
           cp -a blueprint/web/. site/blueprint/
 
+      # API documentation is determined entirely by the pinned docgen builder
+      # and Lean source tree.  Use an exact key only: a source change must
+      # regenerate the documentation rather than restoring a near match.
+      - name: Restore exact Lean API documentation cache
+        id: docs-cache
+        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: site/docs
+          key: docs-${{ runner.os }}-docgen-deed0cdc44dd8e5de07a300773eb751d33e32fc8-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json', 'Anderson4D.lean', 'Anderson4D/**/*.lean') }}
+
       # Invoke the pinned official builder directly so pull requests and
       # trusted deployments use the same API-documentation generation path.
       - name: Check out pinned docgen builder
+        if: steps.docs-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           repository: leanprover-community/docgen-action
@@ -99,6 +110,7 @@ jobs:
           persist-credentials: false
 
       - name: Build Lean API documentation (build-page false)
+        if: steps.docs-cache.outputs.cache-hit != 'true'
         env:
           NAME: anderson4d
           DOCS_FACETS: "Anderson4D:docs"
@@ -115,6 +127,13 @@ jobs:
             echo "Generated site contains a local path or credential-like text." >&2
             exit 1
           fi
+
+      - name: Save exact Lean API documentation cache
+        if: steps.docs-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: site/docs
+          key: ${{ steps.docs-cache.outputs.cache-primary-key }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

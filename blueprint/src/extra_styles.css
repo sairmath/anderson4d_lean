@@ -1,13 +1,13 @@
 :root {
-  --a4-ink: #17231e;
-  --a4-muted: #5b6962;
-  --a4-paper: #f5f5ee;
-  --a4-surface: #fffef9;
-  --a4-line: #d7ddd5;
-  --a4-green: #176b50;
-  --a4-green-dark: #0c4b39;
-  --a4-green-soft: #dceee5;
-  --a4-gold: #b9892f;
+  --a4-ink: #102a43;
+  --a4-muted: #526b80;
+  --a4-paper: #f5fbff;
+  --a4-surface: #ffffff;
+  --a4-line: #cfe4f6;
+  --a4-blue: #2f9fe8;
+  --a4-blue-dark: #0967a8;
+  --a4-blue-soft: #daf2ff;
+  --a4-gold: #b76e18;
 }
 
 body {
@@ -19,7 +19,7 @@ body {
 body > header {
   min-height: 3.7rem;
   color: white;
-  background: var(--a4-green-dark);
+  background: linear-gradient(110deg, #075b9a, var(--a4-blue));
   text-shadow: none;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
@@ -39,11 +39,11 @@ h1#doc_title {
 
 nav.toc,
 .toc ul li {
-  background: #123f31;
+  background: #0b3a5d;
 }
 
 .toc ul li.current {
-  background: var(--a4-green);
+  background: var(--a4-blue-dark);
 }
 
 .toc ul a {
@@ -54,12 +54,12 @@ nav.toc,
 
 .toc ul a:hover,
 .toc ul a:focus-visible {
-  background: #1d5d48;
+  background: #125d8d;
 }
 
 .content {
   background:
-    radial-gradient(circle at 100% 0%, rgba(220, 238, 229, 0.6), transparent 28rem),
+    radial-gradient(circle at 100% 0%, rgba(204, 237, 255, 0.72), transparent 28rem),
     var(--a4-paper);
 }
 
@@ -73,8 +73,8 @@ div.content-wrapper {
   padding: clamp(1.1rem, 3vw, 2.4rem);
   border: 1px solid var(--a4-line);
   border-radius: 0.9rem;
-  background: rgba(255, 254, 249, 0.9);
-  box-shadow: 0 18px 48px rgba(21, 45, 36, 0.07);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 48px rgba(19, 105, 166, 0.08);
 }
 
 .main-text > h1:first-child,
@@ -90,17 +90,17 @@ h2 {
 .main-text > h1:first-child {
   margin-bottom: 1.2rem;
   padding-bottom: 0.8rem;
-  border-bottom: 3px solid var(--a4-green);
+  border-bottom: 3px solid var(--a4-blue);
 }
 
 a {
-  color: var(--a4-green);
+  color: var(--a4-blue-dark);
   text-underline-offset: 0.16em;
 }
 
 a:hover,
 a:focus-visible {
-  color: var(--a4-green-dark);
+  color: #075483;
 }
 
 div[class$="_thmwrapper"] {
@@ -109,7 +109,7 @@ div[class$="_thmwrapper"] {
   border: 1px solid var(--a4-line);
   border-radius: 0.7rem;
   background: var(--a4-surface);
-  box-shadow: 0 5px 20px rgba(21, 45, 36, 0.04);
+  box-shadow: 0 5px 20px rgba(19, 105, 166, 0.05);
 }
 
 div[class$="_thmwrapper"]:target {
@@ -118,21 +118,21 @@ div[class$="_thmwrapper"]:target {
 }
 
 div[class$="_thmheading"] {
-  color: var(--a4-green-dark);
+  color: var(--a4-blue-dark);
   flex-wrap: wrap;
   gap: 0.16rem;
 }
 
 div.theorem_thmcontent,
 div.proposition_thmcontent {
-  border-left: 0.2rem solid var(--a4-green);
+  border-left: 0.2rem solid var(--a4-blue);
 }
 
 div.lemma_thmcontent,
 div.corollary_thmcontent,
 div.definition_thmcontent,
 div.thm_thmcontent {
-  border-left: 0.13rem solid #8aaa9a;
+  border-left: 0.13rem solid #86b8d8;
 }
 
 div[class$="_thmcontent"] {
@@ -144,12 +144,12 @@ div.proof_wrapper {
   margin: 0.7rem 0 1.2rem;
   padding: 0.8rem 1rem;
   border-radius: 0.55rem;
-  background: #f1f3ee;
+  background: #edf7fd;
 }
 
 div.proof_content {
   margin-left: 0;
-  border-left: 0.1rem solid #9ba69f;
+  border-left: 0.1rem solid #9abdd3;
 }
 
 a.lean_decl,
@@ -161,10 +161,10 @@ a.latex_link {
   overflow-wrap: anywhere;
   margin: 0.16rem 0;
   padding: 0.22rem 0.48rem;
-  border: 1px solid #b9d0c4;
+  border: 1px solid #b5d9ef;
   border-radius: 0.38rem;
-  color: var(--a4-green-dark);
-  background: var(--a4-green-soft);
+  color: var(--a4-blue-dark);
+  background: var(--a4-blue-soft);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.8rem;
   font-weight: 650;
@@ -179,12 +179,12 @@ a.github_link:hover,
 a.github_link:focus-visible,
 a.latex_link:hover,
 a.latex_link:focus-visible {
-  border-color: var(--a4-green);
-  background: #d1e8dc;
+  border-color: var(--a4-blue);
+  background: #c9ebff;
 }
 
 nav.prev_up_next {
-  background: var(--a4-green-dark);
+  background: #0b3a5d;
 }
 
 nav.prev_up_next a {
@@ -193,13 +193,13 @@ nav.prev_up_next a {
 }
 
 div.modal-content {
-  border-color: var(--a4-green);
+  border-color: var(--a4-blue);
   border-radius: 0.7rem;
 }
 
 div.modal-content header {
   color: white;
-  background: var(--a4-green-dark);
+  background: var(--a4-blue-dark);
   text-shadow: none;
 }
 
@@ -214,12 +214,12 @@ pre.verbatim {
   overflow-x: auto;
   border: 1px solid var(--a4-line);
   border-radius: 0.5rem;
-  background: #eef1ec;
+  background: #eef7fc;
 }
 
 ::selection {
   color: white;
-  background: var(--a4-green);
+  background: var(--a4-blue-dark);
 }
 
 @media (max-width: 1023px) {

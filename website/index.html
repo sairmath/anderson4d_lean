@@ -3,123 +3,77 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0c4b39">
-    <meta
-      name="description"
-      content="A Lean 4 formalization of the conditional main theorem in Deng and Shen's four-dimensional Anderson model."
-    >
+    <meta name="theme-color" content="#0b6fb8">
+    <meta name="description" content="A Lean 4 formalization of the conditional main theorem in Deng and Shen's four-dimensional Anderson model.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="anderson4d — Lean 4 formalization">
-    <meta
-      property="og:description"
-      content="Conditional Theorem 1.1, connected from paper to blueprint to Lean-checked source."
-    >
+    <meta property="og:description" content="Conditional Theorem 1.1, connected from the paper to the blueprint and Lean-checked source.">
     <meta property="og:url" content="https://sairmath.github.io/anderson4d_lean/">
     <meta property="og:image" content="https://sairmath.github.io/anderson4d_lean/og.png">
     <meta name="twitter:card" content="summary_large_image">
     <title>anderson4d — Lean 4 formalization</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to the proof map</a>
+    <a class="skip-link" href="#proof-map">Skip to the proof map</a>
 
-    <header class="site-header">
-      <a class="wordmark" href="./" aria-label="anderson4d home">
-        <span class="mark" aria-hidden="true">A4</span>
-        <span>anderson4d</span>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="#proof-map">Proof map</a>
-        <a href="#main-theorem">Main theorem</a>
-        <a href="blueprint/dep_graph_document.html">Full DAG</a>
-        <a href="docs/">Lean API</a>
-        <a href="https://github.com/sairmath/anderson4d_lean">GitHub</a>
-      </nav>
+    <header class="masthead">
+      <div class="topline">
+        <a class="wordmark" href="./" aria-label="anderson4d home">
+          <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>anderson4d</span>
+        </a>
+      </div>
+
+      <div class="hero">
+        <p class="eyebrow">Lean 4 + mathlib</p>
+        <h1>The four-dimensional Anderson model</h1>
+        <p class="lede">
+          A conditional formalization of Deng&ndash;Shen Theorem&nbsp;1.1, with the
+          mathematical argument linked directly to its blueprint and checked Lean source.
+        </p>
+
+        <nav class="resource-tabs" aria-label="Project resources">
+          <a href="https://arxiv.org/pdf/2607.10105v1" target="_blank" rel="noopener"><span>Original</span> Paper</a>
+          <a href="blueprint/"><span>Mathematical</span> Blueprint</a>
+          <a href="docs/"><span>Generated</span> Lean API</a>
+          <a href="https://github.com/sairmath/anderson4d_lean" target="_blank" rel="noopener"><span>Auditable</span> GitHub</a>
+        </nav>
+
+        <div class="status-line" aria-label="Formalization status">
+          <strong><span aria-hidden="true"></span> Conditional scope complete</strong>
+          <span>53 blueprint nodes</span>
+          <span>167 checked declarations</span>
+          <span>0 project sorrys</span>
+        </div>
+      </div>
     </header>
 
-    <main id="content">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Lean 4 + mathlib</p>
-          <h1 id="hero-title">The four-dimensional Anderson model, checked.</h1>
-          <p class="lede">
-            A formalization of the finite-family convergence-in-distribution
-            form of Deng&ndash;Shen Theorem&nbsp;1.1, with every load-bearing result
-            connected from the paper to the blueprint and Lean source.
-          </p>
-          <div class="actions">
-            <a class="button primary" href="#proof-map">Follow the proof</a>
-            <a class="button secondary" href="blueprint/ch-main.html#T-1.1">Read Theorem 1.1</a>
-          </div>
-        </div>
-
-        <aside class="scope-card" aria-label="Formalization scope">
-          <p class="scope-kicker">Formalization status</p>
-          <p class="scope-status"><span aria-hidden="true"></span> Conditional scope complete</p>
-          <p>
-            The only external mathematical input is the uniform family form
-            of Gabriel&ndash;Rosati Proposition&nbsp;3.6. It is an explicit theorem
-            hypothesis, not a Lean axiom.
-          </p>
-          <dl class="metrics">
-            <div><dt>53</dt><dd>blueprint nodes</dd></div>
-            <div><dt>167</dt><dd>checked declarations</dd></div>
-            <div><dt>0</dt><dd>project sorrys</dd></div>
-          </dl>
-          <a class="text-link" href="blueprint/ch-main.html#P-3.6">Inspect the external input <span aria-hidden="true">&rarr;</span></a>
-        </aside>
-      </section>
-
+    <main>
       <section class="proof-section" id="proof-map" aria-labelledby="proof-title">
         <div class="section-intro">
           <div>
             <p class="eyebrow">Start here</p>
             <h2 id="proof-title">The proof at a glance</h2>
           </div>
-          <p>
-            Read left to right. Each stage opens the exact blueprint node;
-            the full graph records all 53 nodes and 103 dependency edges.
-          </p>
+          <p>Read left to right. Every stage opens its exact blueprint node; the full graph records all 53 nodes and 103 dependency edges.</p>
         </div>
 
         <div class="proof-rail" aria-label="Compact dependency path to Theorem 1.1">
-          <a class="proof-node" href="blueprint/ch-hepp.html#P-5.6">
-            <span class="node-id">P-5.6 / P-5.7 / P-5.9</span>
-            <strong>Count &amp; organize</strong>
-            <small>Hepp trees and permutation sums</small>
-          </a>
+          <a class="proof-node" href="blueprint/ch-hepp.html#P-5.6"><span class="node-id">P-5.6 / P-5.7 / P-5.9</span><strong>Count &amp; organize</strong><small>Hepp trees and permutation sums</small></a>
           <span class="proof-arrow" aria-hidden="true">&rarr;</span>
-          <a class="proof-node" href="blueprint/ch-continuum.html#P-4.1">
-            <span class="node-id">P-4.1</span>
-            <strong>Estimate kernels</strong>
-            <small>Primitive continuum bound</small>
-          </a>
+          <a class="proof-node" href="blueprint/ch-continuum.html#P-4.1"><span class="node-id">P-4.1</span><strong>Estimate kernels</strong><small>Primitive continuum bound</small></a>
           <span class="proof-arrow" aria-hidden="true">&rarr;</span>
-          <a class="proof-node" href="blueprint/ch-detparametrix.html#R-324">
-            <span class="node-id">R-322 / R-324</span>
-            <strong>Control moments</strong>
-            <small>Deterministic parametrix bounds</small>
-          </a>
+          <a class="proof-node" href="blueprint/ch-detparametrix.html#R-324"><span class="node-id">R-322 / R-324</span><strong>Control moments</strong><small>Deterministic parametrix bounds</small></a>
           <span class="proof-arrow" aria-hidden="true">&rarr;</span>
-          <a class="proof-node" href="blueprint/ch-main.html#P-red">
-            <span class="node-id">P-3.5b / P-red</span>
-            <strong>Pass to probability</strong>
-            <small>Wick reduction and good event</small>
-          </a>
+          <a class="proof-node" href="blueprint/ch-main.html#P-red"><span class="node-id">P-3.5b / P-red</span><strong>Pass to probability</strong><small>Wick reduction and good event</small></a>
           <span class="proof-arrow" aria-hidden="true">&rarr;</span>
-          <a class="proof-node final-node" href="blueprint/ch-main.html#T-1.1">
-            <span class="node-id">P-mom / T-1.1</span>
-            <strong>Converge in law</strong>
-            <small>Gaussian moments to the main theorem</small>
-          </a>
+          <a class="proof-node final-node" href="blueprint/ch-main.html#T-1.1"><span class="node-id">P-mom / T-1.1</span><strong>Converge in law</strong><small>Gaussian moments to the main theorem</small></a>
         </div>
 
         <div class="external-input">
           <span class="external-mark" aria-hidden="true">+</span>
-          <p>
-            <strong>External input P-3.6:</strong> the uniform Gabriel&ndash;Rosati
-            estimate enters only at the final probabilistic assembly.
-          </p>
+          <p><strong>External input P-3.6:</strong> the uniform Gabriel&ndash;Rosati estimate enters only at the final probabilistic assembly, as an explicit theorem hypothesis rather than a Lean axiom.</p>
           <a href="docs/find/#doc/Anderson4D.Prop36Family">Lean declaration <span aria-hidden="true">&rarr;</span></a>
         </div>
 
@@ -131,111 +85,54 @@
 
       <section class="theorem-section" id="main-theorem" aria-labelledby="theorem-title">
         <div class="theorem-heading">
-          <div>
-            <p class="eyebrow">Conditional Theorem 1.1</p>
-            <h2 id="theorem-title">The public capstone</h2>
-          </div>
+          <div><p class="eyebrow">Conditional Theorem 1.1</p><h2 id="theorem-title">The public capstone</h2></div>
           <code>Prop36Family M rho &rarr; MainLawStatement M rho</code>
         </div>
         <p class="theorem-copy">
-          For each fixed noise model and cutoff satisfying the external
-          hypothesis, there is a positive coupling threshold below which any
-          finite family of Fourier modes converges in distribution to the
-          stated centered Gaussian limit. Lean records this through joint
-          characteristic functions and derives the usual finite-vector form.
+          For each fixed noise model and cutoff satisfying the external hypothesis,
+          there is a positive coupling threshold below which every finite family of
+          Fourier modes converges in distribution to the stated centered Gaussian
+          limit. Lean records joint convergence through characteristic functions and derives the finite-vector form.
         </p>
         <div class="theorem-links" aria-label="Theorem 1.1 links">
-          <a href="https://arxiv.org/pdf/2607.10105v1#page=1"><span>Paper statement</span><strong>Theorem 1.1</strong></a>
+          <a href="https://arxiv.org/pdf/2607.10105v1#page=1" target="_blank" rel="noopener"><span>Paper statement</span><strong>Theorem 1.1</strong></a>
           <a href="blueprint/ch-main.html#T-1.1"><span>Blueprint node</span><strong>T-1.1</strong></a>
           <a href="docs/find/#doc/Anderson4D.main_conditional_law"><span>Lean declaration</span><strong>main_conditional_law</strong></a>
-          <a href="https://github.com/sairmath/anderson4d_lean/blob/main/Anderson4D/Main/Final.lean#L59"><span>Checked source</span><strong>Final.lean</strong></a>
+          <a href="https://github.com/sairmath/anderson4d_lean/blob/main/Anderson4D/Main/Final.lean#L59" target="_blank" rel="noopener"><span>Checked source</span><strong>Final.lean</strong></a>
         </div>
       </section>
 
       <section class="results-section" aria-labelledby="results-title">
         <div class="section-intro">
-          <div>
-            <p class="eyebrow">Paper &harr; Lean</p>
-            <h2 id="results-title">Load-bearing results</h2>
-          </div>
-          <p>Highlighted statements link directly to their mathematical node and checked declaration.</p>
+          <div><p class="eyebrow">Paper &harr; Lean</p><h2 id="results-title">Load-bearing results</h2></div>
+          <p>Each row links the paper result to its blueprint node and checked Lean declaration.</p>
         </div>
-        <div class="results-grid">
-          <article class="result-card result-main">
-            <span class="result-label">Paper Theorem 1.1</span>
-            <h3>Conditional convergence in law</h3>
-            <p>Finite Fourier-mode families converge to the explicit Gaussian limit.</p>
-            <div><a href="blueprint/ch-main.html#T-1.1">Blueprint</a><a href="docs/find/#doc/Anderson4D.main_conditional_law">Lean</a></div>
-          </article>
-          <article class="result-card result-external">
-            <span class="result-label">Paper Proposition 3.6</span>
-            <h3>Explicit external hypothesis</h3>
-            <p>The uniform family estimate quoted from Gabriel&ndash;Rosati.</p>
-            <div><a href="blueprint/ch-main.html#P-3.6">Blueprint</a><a href="docs/find/#doc/Anderson4D.Prop36Family">Lean</a></div>
-          </article>
-          <article class="result-card">
-            <span class="result-label">Paper Proposition 4.1</span>
-            <h3>Primitive continuum estimate</h3>
-            <p>The analytic engine for singular kernel bounds.</p>
-            <div><a href="blueprint/ch-continuum.html#P-4.1">Blueprint</a><a href="docs/find/#doc/Anderson4D.proposition41">Lean</a></div>
-          </article>
-          <article class="result-card">
-            <span class="result-label">Paper Proposition 5.6</span>
-            <h3>Hepp-tree volume bound</h3>
-            <p>Controls the combinatorial volume assigned to each tree.</p>
-            <div><a href="blueprint/ch-hepp.html#P-5.6">Blueprint</a><a href="docs/find/#doc/Anderson4D.volume_estimate">Lean</a></div>
-          </article>
-          <article class="result-card">
-            <span class="result-label">Paper Proposition 5.7</span>
-            <h3>Permutation-sum estimate</h3>
-            <p>Bounds the structured sum over words and permutations.</p>
-            <div><a href="blueprint/ch-permsum.html#P-5.7">Blueprint</a><a href="docs/find/#doc/Anderson4D.permSum_estimate">Lean</a></div>
-          </article>
-          <article class="result-card">
-            <span class="result-label">Paper Proposition 5.9</span>
-            <h3>Inductive estimate</h3>
-            <p>Closes the discrete multiscale induction.</p>
-            <div><a href="blueprint/ch-permsum.html#P-5.9">Blueprint</a><a href="docs/find/#doc/Anderson4D.inductive_estimate">Lean</a></div>
-          </article>
-        </div>
-        <a class="index-link" href="https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_TO_LEAN.md">Open the complete paper-to-Lean index <span aria-hidden="true">&rarr;</span></a>
-      </section>
 
-      <section class="reading-section" aria-labelledby="reading-title">
-        <p class="eyebrow">Choose a view</p>
-        <h2 id="reading-title">One proof, three reading modes</h2>
-        <div class="reading-grid">
-          <a href="blueprint/"><span>01</span><h3>Mathematical blueprint</h3><p>Statements, explanations, dependencies, and the complete interactive DAG.</p><strong>Open blueprint &rarr;</strong></a>
-          <a href="docs/"><span>02</span><h3>Generated Lean API</h3><p>Search exact types, definitions, imports, and theorem declarations.</p><strong>Open API docs &rarr;</strong></a>
-          <a href="https://github.com/sairmath/anderson4d_lean"><span>03</span><h3>Auditable source</h3><p>Build instructions, trust checks, proof modules, and paper crosswalk.</p><strong>Open GitHub &rarr;</strong></a>
+        <div class="results-list">
+          <article class="result-row result-main"><div><span class="result-label">Theorem 1.1</span><h3>Conditional convergence in law</h3></div><p>Finite Fourier-mode families converge to the explicit Gaussian limit.</p><div class="result-links"><a href="blueprint/ch-main.html#T-1.1">Blueprint</a><a href="docs/find/#doc/Anderson4D.main_conditional_law">Lean</a></div></article>
+          <article class="result-row result-external"><div><span class="result-label">Proposition 3.6</span><h3>Explicit external hypothesis</h3></div><p>The uniform family estimate quoted from Gabriel&ndash;Rosati.</p><div class="result-links"><a href="blueprint/ch-main.html#P-3.6">Blueprint</a><a href="docs/find/#doc/Anderson4D.Prop36Family">Lean</a></div></article>
+          <article class="result-row"><div><span class="result-label">Proposition 4.1</span><h3>Primitive continuum estimate</h3></div><p>The analytic engine for singular kernel bounds.</p><div class="result-links"><a href="blueprint/ch-continuum.html#P-4.1">Blueprint</a><a href="docs/find/#doc/Anderson4D.proposition41">Lean</a></div></article>
+          <article class="result-row"><div><span class="result-label">Proposition 5.6</span><h3>Hepp-tree volume bound</h3></div><p>Controls the combinatorial volume assigned to each tree.</p><div class="result-links"><a href="blueprint/ch-hepp.html#P-5.6">Blueprint</a><a href="docs/find/#doc/Anderson4D.volume_estimate">Lean</a></div></article>
+          <article class="result-row"><div><span class="result-label">Proposition 5.7</span><h3>Permutation-sum estimate</h3></div><p>Bounds the structured sum over words and permutations.</p><div class="result-links"><a href="blueprint/ch-permsum.html#P-5.7">Blueprint</a><a href="docs/find/#doc/Anderson4D.permSum_estimate">Lean</a></div></article>
+          <article class="result-row"><div><span class="result-label">Proposition 5.9</span><h3>Inductive estimate</h3></div><p>Closes the discrete multiscale induction.</p><div class="result-links"><a href="blueprint/ch-permsum.html#P-5.9">Blueprint</a><a href="docs/find/#doc/Anderson4D.inductive_estimate">Lean</a></div></article>
         </div>
+
+        <a class="index-link" href="https://github.com/sairmath/anderson4d_lean/blob/main/docs/PAPER_TO_LEAN.md" target="_blank" rel="noopener">Open the complete paper-to-Lean index <span aria-hidden="true">&rarr;</span></a>
       </section>
 
       <section class="provenance" aria-label="Authorship, citation, and license">
+        <div><p class="eyebrow">Provenance</p><h2>Built to be inspected.</h2></div>
         <div>
-          <p class="eyebrow">Provenance</p>
-          <h2>Built to be inspected.</h2>
-        </div>
-        <div>
-          <p>
-            Formalization authors: <strong>Yu Deng</strong>,
-            <strong>Hao Shen</strong>, and <strong>sairmath</strong>.
-          </p>
-          <p>
-            Based on <a href="https://arxiv.org/abs/2607.10105">Deng&ndash;Shen,
-            “The four-dimensional Anderson model: a case study for critical SPDEs”</a>.
-          </p>
-          <p>
-            See <a href="https://github.com/sairmath/anderson4d_lean/blob/main/CITATION.cff">citation metadata</a>
-            and the <a href="https://github.com/sairmath/anderson4d_lean/blob/main/LICENSE">Apache License 2.0</a>.
-          </p>
+          <p>Formalization authors: <strong>Yu Deng</strong>, <strong>Hao Shen</strong>, and <strong>sairmath</strong>.</p>
+          <p>Based on <a href="https://arxiv.org/abs/2607.10105" target="_blank" rel="noopener">Deng&ndash;Shen, “The four-dimensional Anderson model: a case study for critical SPDEs”</a>.</p>
+          <p>See <a href="https://github.com/sairmath/anderson4d_lean/blob/main/CITATION.cff" target="_blank" rel="noopener">citation metadata</a> and the <a href="https://github.com/sairmath/anderson4d_lean/blob/main/LICENSE" target="_blank" rel="noopener">Apache License 2.0</a>.</p>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Built from the checked Lean source, leanblueprint, and generated API documentation.</p>
-      <a href="https://github.com/sairmath/anderson4d_lean">View repository</a>
+      <p>Lean source · mathematical blueprint · generated API documentation</p>
+      <a href="https://github.com/sairmath/anderson4d_lean" target="_blank" rel="noopener">Repository</a>
     </footer>
   </body>
 </html>
